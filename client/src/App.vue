@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <h1>Spot<span id="dot"></span> and Identify</h1>
+    <h1>Spot<span id="dot"></span> <span id="identify">and Identify</span></h1>
+    <p>Bla bla bla test</p>
   </div>
 </template>
 
@@ -29,23 +30,29 @@ export default {
 
 #app {
   width: 80%;
+  justify-content: center;
   margin-left: 10%;
   margin-left: 10%;
   padding-bottom: 40rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
   background-color: #fcfdff;
   opacity: 90%;
-  text-align: center;
 }
 
 h1 {
   padding: 0.5em 0.5em;
   text-transform: lowercase;
   text-align: center;
-  /* font-family: 'Muli', sans-serif; */
   font-family: 'Lato', sans-serif;
   font-size: 2.5em;
   color: slategrey;
   opacity: 80%;
+  text-align: center;
+}
+
+#identify {
+  font-size: 0.5em;
 }
 
 #dot::before {
