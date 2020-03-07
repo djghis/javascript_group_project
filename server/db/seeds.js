@@ -11,4 +11,15 @@ db.playlists.insertOne({
     {artist: "ABBA",
     track: "Dancing Queen"}
   ]
-});
+})
+
+db.playlists.insertOne({
+  name: "Birthday Playlist",
+  tracks: [
+    {artist: "Wham!",
+    track: "Wake Me Up Before You Go-Go"},
+    {artist: "ABBA",
+    track: "Dancing Queen"}
+  ]
+})
+;

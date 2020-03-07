@@ -1,4 +1,6 @@
 body {
-  background-color: #fcfdff;
-  text-align: center;
+  /* background-color: #fcba03; */
+  /* background-color: #4C4C47; */
+  background-color: #2d3436;
+  background-image: linear-gradient(315deg, #ffed4f -50%, #000000 74%);
 }
