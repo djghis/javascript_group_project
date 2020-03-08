@@ -30,28 +30,30 @@ import PlaylistService from './services/PlaylistService.js';
 import {latLng} from "leaflet";
 import L from 'leaflet';
 import {LMap, LTileLayer, LMarker} from 'vue2-leaflet';
+// import Countries from '../countries.geojson';
+//
+// GeoJSONParser.parse(data, {Point: ['lat', 'lng']}, function(Countries){
+//   console.log(JSON.stringify(Countries));
+// });
+
 
 export default {
   name: 'App',
-  components: {
-    LMap,
-    LTileLayer,
-    LMarker
-  },
   data() {
     return {
+      // countryInfo: Countries,
       zoom: 2,
       center: latLng(0, 0),
       url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
       attribution:
       'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
       currentZoom: 2,
-      panTo: L.latLng(22, 5),
+      panTo: L.latLng(0, 0),
       showParagraph: false,
-      marker: L.latLng(22, 5),
+      marker: L.latLng(0, 0),
       myIcon: L.icon({
          iconSize: [38, 95],
-         iconAnchor: [22, 94],
+         iconAnchor: [0, 0],
          popupAnchor: [-3, -76],
        }),
       markerOptions: {
@@ -63,8 +65,11 @@ export default {
       setTimeout: 5000
      }
    },
-  mounted() {
-     },
+   components: {
+     LMap,
+     LTileLayer,
+     LMarker
+   }
 }
 </script>
 
