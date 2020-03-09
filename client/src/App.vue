@@ -8,9 +8,6 @@
     <tracks-list v-if='searchedTracks' :tracks="searchedTracks"/>
     <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks"/>
     <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" name="" value="Clear">
-
-
-
   </div>
 </template>
 

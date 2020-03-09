@@ -16,23 +16,24 @@ export default {
   props: ['artist', 'topalbums', 'toptracks'],
   computed: {
     similarArtists: function(){
-      return this.artist.similar.artist.map(artist => {
+      const artists = this.artist.similar.artist.map(artist => {
         return artist.name;
       })
+      return artists.join(", ")
     },
     topAlbums: function() {
-
-        return this.topalbums.album.map(album => {
+        const albums = this.topalbums.album.map(album => {
           return album.name;
       })
+      return albums.join(", ")
     },
     topTracks: function() {
-
-      return this.toptracks.track.map(track => {
+      const tracks = this.toptracks.track.map(track => {
         return track.name;
       })
-  }
-},
+      return tracks.join(", ")
+    }
+  },
   components: {
     "music-service": MusicService
   }
