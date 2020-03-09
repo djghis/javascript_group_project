@@ -1,23 +1,27 @@
 <template>
   <div id="app">
     <h1>Spot<span id="dot"></span> <span id="identify">and Identify</span></h1>
-
     <search-form></search-form>
-    <artists-list :artists="searchedArtists"></artists-list>
     <artist-details :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
-    <chart-component/>
+    <artists-list v-if='searchedArtists' :artists="searchedArtists"></artists-list>
+    <albums-list v-if='searchedAlbums' :albums="searchedAlbums"/>
+    <tracks-list v-if='searchedTracks' :tracks="searchedTracks"/>
+    <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks"/>
+    <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" name="" value="Clear">
+
+
 
   </div>
 </template>
 
 <script>
 
-// use artist search function to return artist list with user input when they make playlists (e.g. http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=ch&api_key=KEY&format=json)
-
 import MusicService from './services/MusicService.js';
 import PlaylistService from './services/PlaylistService.js';
 import SearchForm from './components/SearchForm.vue';
 import ArtistsList from './components/ArtistsList.vue';
+import AlbumsList from './components/AlbumsList.vue';
+import TracksList from './components/TracksList.vue';
 import { eventBus } from '@/main.js';
 import ChartComponent from './components/ChartComponent.vue';
 import ArtistDetails from './components/ArtistDetails.vue';
@@ -31,22 +35,40 @@ export default {
       topArtists: [],
       topTracks: [],
       topTags: [],
-      searchedArtists: [],
       topAlbums: [],
-      topTracks: []
+      topTracks: [],
+      searchedArtists: '',
+      searchedAlbums: '',
+      searchedTracks: ''
     }
   },
   components: {
     "search-form": SearchForm,
     "artists-list": ArtistsList,
     "chart-component": ChartComponent,
-    "artist-details": ArtistDetails
+    "artist-details": ArtistDetails,
+    "albums-list": AlbumsList,
+    "tracks-list": TracksList
   },
   mounted() {
 
     eventBus.$on('submit-artist', (artist) => {
+      this.searchedAlbums = '';
+      this.searchedTracks = '';
       MusicService.getArtists(artist)
       .then(res => this.searchedArtists = res )
+    }),
+    eventBus.$on('submit-album', (album) => {
+      this.searchedArtists = '';
+      this.searchedTracks = '';
+      MusicService.getAlbums(album)
+      .then(res => this.searchedAlbums = res )
+    }),
+    eventBus.$on('submit-track', (track) => {
+      this.searchedArtists = '';
+      this.searchedAlbums = '';
+      MusicService.getTracks(track)
+      .then(res => this.searchedTracks = res )
     })
     eventBus.$on('artist-selected', artist => {
       MusicService.getArtistInfo(artist.name)
@@ -61,6 +83,13 @@ export default {
       .then(res => this.topTracks = res)
     })
 
+  },
+  methods: {
+    clear: function() {
+      this.searchedArtists= '';
+      this.searchedAlbums ='';
+      this.searchedTracks = '';
+    }
   }
 }
 
