@@ -31,7 +31,9 @@ export default {
       topArtists: [],
       topTracks: [],
       topTags: [],
-      searchedArtists: []
+      searchedArtists: [],
+      topAlbums: [],
+      topTracks: []
     }
   },
   components: {
