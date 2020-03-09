@@ -22,10 +22,9 @@ export default {
     .then(data => data.results.albummatches.artist)
   },
 
-  getArtistInfo(mbid) {
-    const url = `${baseURL}?method=artist.getinfo&mbid=${mbid}&api_key=7c5633ed04fb1140593f4c642ba29c60&format=json`
+  getArtistInfo(name) {
+    const url = `${baseURL}?method=artist.getinfo&artist=${name}&api_key=7c5633ed04fb1140593f4c642ba29c60&format=json`
     .then(res => res.json())
-    .then(data => data.artist)
   }
 
 

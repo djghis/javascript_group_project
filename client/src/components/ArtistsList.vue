@@ -1,21 +1,23 @@
 <template lang="html">
   <div class="">
     <ul>
-      <li v-if="artist.mbid" @click="handleClick(artist.mbid)" v-for='(artist, index) in artists' :key='index'>{{artist.name}}</li>
+      <li @click="handleClick()" v-for='(artist, index) in artists' :value="index" :key='index'>{{artist.name}}</li>
     </ul>
   </div>
 
 </template>
 
 <script>
-import {eventBus} from '../main.js'
+import {eventBus} from '../main.js';
+import ArtistDetails from './ArtistDetails.vue';
 
 export default {
   name: 'artists-list',
   props: ['artists'],
   methods: {
-    handleClick(mbid) {
-      eventBus.$emit('artist-selected', this.artist)
+    handleClick() {
+      eventBus.$emit('artist-selected', this.artists[event.target.value])
+      console.log(this.artists[event.target.value])
     }
   }
 }

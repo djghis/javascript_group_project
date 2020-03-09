@@ -1,6 +1,5 @@
 <template lang="html">
   <div v-if="artist" id="artistDetails">
-    <h2>{{artist.name}}</h2>
 
   </div>
 </template>
@@ -12,9 +11,18 @@ import MusicService from '../services/MusicService.js'
 export default {
   name: 'artist-details',
   props: ['artist'],
+  data() {
+    return {
+      selectedArtist: null
+    }
+  },
   mounted() {
-    eventBus.$on('artist-selected', this.artist);
-    MusicService.getArtistInfo(this.artist.mbid)
+    eventBus.$on('artist-selected', (artist) => {
+      this.selectedArtist = artist
+      console.log(this.selectedArtist.name)
+      MusicService.getArtistInfo(this.selectedArtist.name)
+    })
+
   },
   components: {
     "music-service": MusicService

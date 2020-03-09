@@ -4,7 +4,8 @@
 
     <search-form></search-form>
     <artists-list :artists="searchedArtists"></artists-list>
-    <chart-component />
+    <artist-details :artist-details/>
+    <chart-component/>
 
   </div>
 </template>
