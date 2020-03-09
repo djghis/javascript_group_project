@@ -2,9 +2,13 @@
   <div id="app">
     <h1>Spot<span id="dot"></span> <span id="identify">and Identify</span></h1>
 
-    <search-form></search-form>
-    <artists-list :artists="searchedArtists"></artists-list>
-    <chart-component />
+    <search-form ></search-form>
+    <artists-list v-if='searchedArtists' :artists="searchedArtists"></artists-list>
+    <albums-list v-if='searchedAlbums' :albums="searchedAlbums"/>
+    <tracks-list v-if='searchedTracks' :tracks="searchedTracks"/>
+    <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks"/>
+    <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" name="" value="Clear">
+
 
   </div>
 </template>
@@ -17,6 +21,8 @@ import MusicService from './services/MusicService.js';
 import PlaylistService from './services/PlaylistService.js';
 import SearchForm from './components/SearchForm.vue';
 import ArtistsList from './components/ArtistsList.vue';
+import AlbumsList from './components/AlbumsList.vue';
+import TracksList from './components/TracksList.vue';
 import { eventBus } from '@/main.js';
 import ChartComponent from './components/ChartComponent.vue';
 
@@ -28,29 +34,45 @@ export default {
       topArtists: [],
       topTracks: [],
       topTags: [],
-      searchedArtists: []
+      searchedArtists: '',
+      searchedAlbums: '',
+      searchedTracks: ''
     }
   },
   components: {
     "search-form": SearchForm,
     "artists-list": ArtistsList,
-    "chart-component": ChartComponent
+    "chart-component": ChartComponent,
+    "albums-list": AlbumsList,
+    "tracks-list": TracksList
   },
   mounted() {
-    // const apiKey = process.env.API_KEY;
-    // fetch(`http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&limit=3&api_key=775afedfb0c1c69dac2ed7ccf1084581&format=json`)
-    //   .then((res) => res.json())
-    //   .then(data => {
-    //     this.topTracks = data.tracks.track;
-    //     this.topTracks.forEach((track) => {
-    //     });
-    //
-    //   })
 
     eventBus.$on('submit-artist', (artist) => {
+      this.searchedAlbums = '';
+      this.searchedTracks = '';
       MusicService.getArtists(artist)
       .then(res => this.searchedArtists = res )
+    }),
+    eventBus.$on('submit-album', (album) => {
+      this.searchedArtists = '';
+      this.searchedTracks = '';
+      MusicService.getAlbums(album)
+      .then(res => this.searchedAlbums = res )
+    }),
+    eventBus.$on('submit-track', (track) => {
+      this.searchedArtists = '';
+      this.searchedAlbums = '';
+      MusicService.getTracks(track)
+      .then(res => this.searchedTracks = res )
     })
+  },
+  methods: {
+    clear: function() {
+      this.searchedArtists= '';
+      this.searchedAlbums ='';
+      this.searchedTracks = '';
+    }
   }
 }
 

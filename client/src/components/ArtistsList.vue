@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="">
     <ul>
-      <li @click="handleClick(artist.mbid)" v-for='(artist, index) in artists' :key='index'>{{artist.name}}</li>
+      <li @click="handleClick(artist.name)" v-for='(artist, index) in artists' :key='index'>{{artist.name}}</li>
     </ul>
   </div>
 
@@ -12,8 +12,8 @@ export default {
   name: 'artists-list',
   props: ['artists'],
   methods: {
-    handleClick (mbid) {
-      console.log(mbid);
+    handleClick (name) {
+      console.log(name);
     }
   }
 }
