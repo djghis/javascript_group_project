@@ -4,7 +4,7 @@
 
     <search-form></search-form>
     <artists-list :artists="searchedArtists"></artists-list>
-    <artist-details :artist-details/>
+    <artist-details :artist="artistDetails"/>
     <chart-component/>
 
   </div>
@@ -26,6 +26,7 @@ import ArtistDetails from './components/ArtistDetails.vue';
 export default {
   data() {
     return {
+      artistDetails: null,
       playlists: [],
       topArtists: [],
       topTracks: [],
@@ -40,19 +41,14 @@ export default {
     "artist-details": ArtistDetails
   },
   mounted() {
-    // const apiKey = process.env.API_KEY;
-    // fetch(`http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&limit=3&api_key=775afedfb0c1c69dac2ed7ccf1084581&format=json`)
-    //   .then((res) => res.json())
-    //   .then(data => {
-    //     this.topTracks = data.tracks.track;
-    //     this.topTracks.forEach((track) => {
-    //     });
-    //
-    //   })
 
     eventBus.$on('submit-artist', (artist) => {
       MusicService.getArtists(artist)
       .then(res => this.searchedArtists = res )
+    })
+    eventBus.$on('artist-selected', artist => {
+      MusicService.getArtistInfo(artist.name)
+      .then(res => this.artistDetails = res)
     })
   }
 }

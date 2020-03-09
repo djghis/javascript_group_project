@@ -1,6 +1,7 @@
 <template lang="html">
   <div v-if="artist" id="artistDetails">
-
+    <h3>{{artist.name}}</h3>
+    <h4>Similar artists: {{this.similarArtists}}</h4>
   </div>
 </template>
 
@@ -13,22 +14,22 @@ export default {
   props: ['artist'],
   data() {
     return {
-      selectedArtist: null
+      selectedArtist: null,
+      similarArtists: []
     }
   },
   mounted() {
     eventBus.$on('artist-selected', (artist) => {
       this.selectedArtist = artist
-      console.log(this.selectedArtist.name)
-      MusicService.getArtistInfo(this.selectedArtist.name)
     })
-
+    console.log(this.selectedArtist)
+      if (this.selectedArtist) {
+        this.selectedArtist.similar.artist.forEach(artist => {
+          this.similarArtists.push({name: artist.name})
+    })}
   },
   components: {
     "music-service": MusicService
-  },
-  methods: {
-
   }
 }
 </script>

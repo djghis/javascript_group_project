@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="">
     <ul>
-      <li @click="handleClick()" v-for='(artist, index) in artists' :value="index" :key='index'>{{artist.name}}</li>
+      <li @click="handleClick(artist)" v-for='(artist, index) in artists' :key='index'>{{artist.name}}</li>
     </ul>
   </div>
 
@@ -15,9 +15,8 @@ export default {
   name: 'artists-list',
   props: ['artists'],
   methods: {
-    handleClick() {
-      eventBus.$emit('artist-selected', this.artists[event.target.value])
-      console.log(this.artists[event.target.value])
+    handleClick(artist) {
+      eventBus.$emit('artist-selected', artist)
     }
   }
 }

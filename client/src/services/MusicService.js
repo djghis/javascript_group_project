@@ -24,7 +24,9 @@ export default {
 
   getArtistInfo(name) {
     const url = `${baseURL}?method=artist.getinfo&artist=${name}&api_key=7c5633ed04fb1140593f4c642ba29c60&format=json`
+    return fetch(url)
     .then(res => res.json())
+    .then(data => data.artist)
   }
 
 
