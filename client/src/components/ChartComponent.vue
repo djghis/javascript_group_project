@@ -1,8 +1,18 @@
 <template lang="html">
-  <div class="">
-    <p>{{this.topArtists}}</p>
-    <p>{{topTracks}}</p>
-    <p>{{topTags}}</p>
+  <div id="charts">
+    <h2>Charting music</h2>
+    <h4>Top artists</h4>
+      <ul>
+        <li v-for="artist in topArtists">{{artist}}</li>
+      </ul>
+    <h4>Top tracks</h4>
+      <ul>
+        <li v-for="track in topTracks">{{track.name}} by {{track.artist}}</li>
+      </ul>
+    <h4>Top tags</h4>
+      <ul>
+        <li v-for="tag in topTags">{{tag}}</li>
+      </ul>
   </div>
 </template>
 
@@ -26,27 +36,27 @@ export default {
     fetchTopArtists(){
       fetch('http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&limit=3&api_key=7c5633ed04fb1140593f4c642ba29c60&format=json')
       .then(res => res.json())
-      .then(data => this.topArtists = this.filterArtists(data))
+      .then(data => this.topArtists = this.formatArtists(data))
     },
     fetchTopTracks(){
       fetch('http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&limit=3&api_key=7c5633ed04fb1140593f4c642ba29c60&format=json')
       .then(res => res.json())
-      .then(data => this.topTracks = this.filterTracks(data))
+      .then(data => this.topTracks = this.formatTracks(data))
     },
     fetchTopTags(){
       fetch('http://ws.audioscrobbler.com/2.0/?method=chart.gettoptags&limit=3&api_key=7c5633ed04fb1140593f4c642ba29c60&format=json')
       .then(res => res.json())
-      .then(data => this.topTags = this.filterTags(data))
+      .then(data => this.topTags = this.formatTags(data))
     },
-    filterArtists(data){
+    formatArtists(data){
       const filteredData = data.artists.artist.map(artist => artist.name)
       return filteredData
     },
-    filterTags(data){
+    formatTags(data){
       const filteredData = data.tags.tag.map(tag => tag.name)
       return filteredData
     },
-    filterTracks(data){
+    formatTracks(data){
       const filteredData = []
       data.tracks.track.forEach(track => {
         filteredData.push({name: track.name, artist: track.artist.name})
