@@ -27,5 +27,5 @@ export default {
   li:hover {
     opacity: 50%;
   }
-  
+
 </style>

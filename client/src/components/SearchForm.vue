@@ -1,21 +1,19 @@
 <template lang="html">
   <div>
-
-
   <form @submit.prevent="handleClickArtist">
-    <label for="">Artist</label>
-    <input v-model='artist' type="text" name="" value="">
-    <input type="submit" name="" value="Search">
+    <!-- <label for="">Artist</label> -->
+    <input v-model='artist' type="text" placeholder="Search for artists">
+    <input type="submit" value="Go">
   </form>
   <form @submit.prevent="handleClickAlbum">
-    <label for="">Album</label>
-    <input v-model='album' type="text" name="" value="">
-    <input type="submit" name="" value="Search">
+    <!-- <label for="">Album</label> -->
+    <input v-model='album' type="text" placeholder="Search for albums">
+    <input type="submit" value="Go">
   </form>
   <form @submit.prevent="handleClickTrack">
-    <label for="">Track</label>
-    <input v-model='track' type="text" name="" value="">
-    <input type="submit" name="" value="Search">
+    <!-- <label for="">Track</label> -->
+    <input v-model='track' type="text" placeholder="Search for songs">
+    <input type="submit" value="Go">
   </form>
 </div>
 </template>
@@ -38,7 +36,6 @@ export default {
     handleClickArtist: function () {
       eventBus.$emit('submit-artist', this.artist);
       this.artist = '';
-
     },
     handleClickAlbum: function () {
       eventBus.$emit('submit-album', this.album);
@@ -53,4 +50,31 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+form {
+  display: inline-block;
+  margin-bottom: 1em;
+  width: 30%;
+}
+
+input {
+  height: 2rem;
+  font-size: 1.2em;
+  padding: 0.5em 1em;
+  margin: 0.5em 0.5em;
+}
+
+input[type=submit] {
+  border-radius: 20px;
+  font-size: 0.8em;
+  padding: 0.5em 0.5em;
+  opacity: 80%;
+  color: dimgrey;
+}
+
+input[type=submit]:hover {
+  opacity: 90%;
+  background-color: #ffed4f;
+}
+
 </style>

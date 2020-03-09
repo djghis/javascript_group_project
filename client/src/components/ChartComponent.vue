@@ -1,6 +1,6 @@
 <template lang="html">
   <div id="charts">
-    <h2>Charting music</h2>
+    <h2>Top of the charts</h2>
     <h4>Top artists</h4>
       <ul>
         <li v-for="artist in topArtists">{{artist}}</li>

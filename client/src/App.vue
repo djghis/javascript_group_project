@@ -116,7 +116,7 @@ h1 {
   text-transform: lowercase;
   text-align: center;
   font-family: 'Lato', sans-serif;
-  font-size: 2.9em;
+  font-size: 3.2em;
   color: slategrey;
   opacity: 80%;
   text-align: center;
