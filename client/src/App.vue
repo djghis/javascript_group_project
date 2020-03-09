@@ -2,6 +2,7 @@
   <div id="app">
     <h1>Spot<span id="dot"></span> <span id="identify">and Identify</span></h1>
     <p>Bla bla bla test</p>
+    <chart-component />
   </div>
 </template>
 
@@ -11,14 +12,15 @@
 
 import MusicService from './services/MusicService.js';
 import PlaylistService from './services/PlaylistService.js';
+import ChartComponent from './components/ChartComponent.vue';
 
 export default {
   data() {
     return {
-      stuff: []
     }
   },
-  mounted() {
+  components: {
+    "chart-component": ChartComponent
   }
 }
 </script>
