@@ -68,4 +68,13 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+#charts {
+  display: block;
+  max-width: 30%;
+  padding: 0.1em 0.5em;
+  margin: 0.5em 0.1em;
+  border: 3px solid red;
+}
+
 </style>

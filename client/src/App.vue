@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Spot<span id="dot"></span> <span id="identify">and Identify</span></h1>
+    <h1>Spot<span id="dot"></span><span id="fm">fm</span></h1>
     <search-form></search-form>
     <artist-details :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
     <artists-list v-if='searchedArtists' :artists="searchedArtists"></artists-list>
@@ -116,14 +116,14 @@ h1 {
   text-transform: lowercase;
   text-align: center;
   font-family: 'Lato', sans-serif;
-  font-size: 2.5em;
+  font-size: 2.9em;
   color: slategrey;
   opacity: 80%;
   text-align: center;
 }
 
-#identify {
-  font-size: 0.5em;
+#fm {
+  font-size: 0.7em;
 }
 
 #dot::before {
