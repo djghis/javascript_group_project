@@ -12,21 +12,12 @@ import MusicService from '../services/MusicService.js'
 export default {
   name: 'artist-details',
   props: ['artist'],
-  data() {
-    return {
-      selectedArtist: null,
-      similarArtists: []
+  computed: {
+    similarArtists: function(){
+      return this.artist.similar.artist.map(artist => {
+        return artist.name;
+      })
     }
-  },
-  mounted() {
-    eventBus.$on('artist-selected', (artist) => {
-      this.selectedArtist = artist
-    })
-    console.log(this.selectedArtist)
-      if (this.selectedArtist) {
-        this.selectedArtist.similar.artist.forEach(artist => {
-          this.similarArtists.push({name: artist.name})
-    })}
   },
   components: {
     "music-service": MusicService

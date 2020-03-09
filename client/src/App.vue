@@ -4,7 +4,7 @@
 
     <search-form></search-form>
     <artists-list :artists="searchedArtists"></artists-list>
-    <artist-details :artist="artistDetails"/>
+    <artist-details :artist="selectedArtistDetails"/>
     <chart-component/>
 
   </div>
@@ -26,7 +26,7 @@ import ArtistDetails from './components/ArtistDetails.vue';
 export default {
   data() {
     return {
-      artistDetails: null,
+      selectedArtistDetails: null,
       playlists: [],
       topArtists: [],
       topTracks: [],
@@ -48,7 +48,7 @@ export default {
     })
     eventBus.$on('artist-selected', artist => {
       MusicService.getArtistInfo(artist.name)
-      .then(res => this.artistDetails = res)
+      .then(res => this.selectedArtistDetails = res)
     })
   }
 }
