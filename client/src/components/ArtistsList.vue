@@ -25,7 +25,8 @@ export default {
 <style lang="css" scoped>
 
   li:hover {
-    opacity: 50%;
+    opacity: 70%;
+    color: green;
   }
 
 </style>

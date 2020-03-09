@@ -1,9 +1,12 @@
 <template lang="html">
   <div v-if="artist" id="artistDetails">
     <h3>{{artist.name}}</h3>
-    <h4>Similar artists: {{this.similarArtists}}</h4>
-    <h4>Top albums: {{this.topAlbums}}</h4>
-    <h4>Top tracks: {{this.topTracks}}</h4>
+    <h4>Similar artists:</h4>
+    <h5>{{this.similarArtists}}</h5>
+    <h4>Top albums:</h4>
+    <h5>{{this.topAlbums}}</h5>
+    <h4>Top tracks:</h4>
+    <h5>{{this.topTracks}}</h5>
   </div>
 </template>
 
@@ -41,4 +44,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+  h5 {
+    font-weight: lighter;
+    font-size: 1em;
+  }
+
 </style>
