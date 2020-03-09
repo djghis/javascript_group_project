@@ -1,8 +1,11 @@
 <template>
   <div id="app">
     <h1>Spot<span id="dot"></span> <span id="identify">and Identify</span></h1>
+
     <search-form></search-form>
     <artists-list :artists="searchedArtists"></artists-list>
+    <chart-component />
+
   </div>
 </template>
 
@@ -15,6 +18,8 @@ import PlaylistService from './services/PlaylistService.js';
 import SearchForm from './components/SearchForm.vue';
 import ArtistsList from './components/ArtistsList.vue';
 import { eventBus } from '@/main.js';
+import ChartComponent from './components/ChartComponent.vue';
+
 
 export default {
   data() {
@@ -28,7 +33,8 @@ export default {
   },
   components: {
     "search-form": SearchForm,
-    "artists-list": ArtistsList
+    "artists-list": ArtistsList,
+    "chart-component": ChartComponent
   },
   mounted() {
     // const apiKey = process.env.API_KEY;
@@ -45,13 +51,11 @@ export default {
       MusicService.getArtists(artist, '775afedfb0c1c69dac2ed7ccf1084581')
       .then(res => this.searchedArtists = res )
     })
-  },
-  computed: {
-    filterData: function(){
-
-    }
   }
 }
+
+
+
 </script>
 
 <style>
