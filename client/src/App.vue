@@ -48,7 +48,7 @@ export default {
     //   })
 
     eventBus.$on('submit-artist', (artist) => {
-      MusicService.getArtists(artist, '775afedfb0c1c69dac2ed7ccf1084581')
+      MusicService.getArtists(artist)
       .then(res => this.searchedArtists = res )
     })
   }
