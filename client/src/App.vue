@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <h1>Spot<span id="dot"></span> <span id="identify">and Identify</span></h1>
-    <p>Bla bla bla test</p>
+    <search-form></search-form>
+    <artists-list :artists="searchedArtists"></artists-list>
   </div>
 </template>
 
@@ -11,14 +12,44 @@
 
 import MusicService from './services/MusicService.js';
 import PlaylistService from './services/PlaylistService.js';
+import SearchForm from './components/SearchForm.vue';
+import ArtistsList from './components/ArtistsList.vue';
+import { eventBus } from '@/main.js';
 
 export default {
   data() {
     return {
-      stuff: []
+      playlists: [],
+      topArtists: [],
+      topTracks: [],
+      topTags: [],
+      searchedArtists: []
     }
   },
+  components: {
+    "search-form": SearchForm,
+    "artists-list": ArtistsList
+  },
   mounted() {
+    // const apiKey = process.env.API_KEY;
+    // fetch(`http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&limit=3&api_key=775afedfb0c1c69dac2ed7ccf1084581&format=json`)
+    //   .then((res) => res.json())
+    //   .then(data => {
+    //     this.topTracks = data.tracks.track;
+    //     this.topTracks.forEach((track) => {
+    //     });
+    //
+    //   })
+
+    eventBus.$on('submit-artist', (artist) => {
+      MusicService.getArtists(artist, '775afedfb0c1c69dac2ed7ccf1084581')
+      .then(res => this.searchedArtists = res )
+    })
+  },
+  computed: {
+    filterData: function(){
+
+    }
   }
 }
 </script>
