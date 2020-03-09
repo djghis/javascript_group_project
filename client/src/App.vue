@@ -4,7 +4,7 @@
 
     <search-form></search-form>
     <artists-list :artists="searchedArtists"></artists-list>
-    <artist-details :artist="selectedArtistDetails"/>
+    <artist-details :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
     <chart-component/>
 
   </div>
@@ -52,6 +52,15 @@ export default {
       MusicService.getArtistInfo(artist.name)
       .then(res => this.selectedArtistDetails = res)
     })
+    eventBus.$on('artist-selected', artist => {
+      MusicService.getArtistAlbums(artist.name)
+      .then(res => this.topAlbums = res)
+    })
+    eventBus.$on('artist-selected', artist => {
+      MusicService.getArtistTracks(artist.name)
+      .then(res => this.topTracks = res)
+    })
+
   }
 }
 

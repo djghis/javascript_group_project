@@ -13,7 +13,7 @@ import MusicService from '../services/MusicService.js'
 
 export default {
   name: 'artist-details',
-  props: ['artist'],
+  props: ['artist', 'topalbums', 'toptracks'],
   computed: {
     similarArtists: function(){
       return this.artist.similar.artist.map(artist => {
@@ -21,12 +21,18 @@ export default {
       })
     },
     topAlbums: function() {
-      return this.artist.topalbums
+
+        return this.topalbums.album.map(album => {
+          return album.name;
+      })
     },
     topTracks: function() {
-      return this.artist.toptracks
-    }
-  },
+
+      return this.toptracks.track.map(track => {
+        return track.name;
+      })
+  }
+},
   components: {
     "music-service": MusicService
   }
