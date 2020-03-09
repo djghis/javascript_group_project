@@ -19,6 +19,7 @@ import SearchForm from './components/SearchForm.vue';
 import ArtistsList from './components/ArtistsList.vue';
 import { eventBus } from '@/main.js';
 import ChartComponent from './components/ChartComponent.vue';
+import ArtistDetails from './components/ArtistDetails.vue';
 
 
 export default {
@@ -34,7 +35,8 @@ export default {
   components: {
     "search-form": SearchForm,
     "artists-list": ArtistsList,
-    "chart-component": ChartComponent
+    "chart-component": ChartComponent,
+    "artist-details": ArtistDetails
   },
   mounted() {
     // const apiKey = process.env.API_KEY;
