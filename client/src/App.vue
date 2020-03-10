@@ -5,7 +5,7 @@
     <div id="grid">
       <div id="search"><search-form></search-form></div>
       <div class="border">
-        <artist-details :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
+        <artist-details v-if="selectedArtistDetails" :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
         <artists-list v-if='searchedArtists' :artists="searchedArtists"></artists-list>
         <albums-list v-if='searchedAlbums' :albums="searchedAlbums"/>
         <tracks-list v-if='searchedTracks' :tracks="searchedTracks" :playlists="playlists"/>
@@ -88,11 +88,11 @@ export default {
     })
     eventBus.$on('artist-selected', artist => {
       MusicService.getArtistAlbums(artist.name)
-      .then(res => this.topAlbums = res)
+      .then(res => this.topAlbums = res.album)
     })
     eventBus.$on('artist-selected', artist => {
       MusicService.getArtistTracks(artist.name)
-      .then(res => this.topTracks = res)
+      .then(res => this.topTracks = res.track)
     })
     eventBus.$on('album-selected', mbid => {
       MusicService.getAlbumTracks(mbid)
@@ -136,7 +136,6 @@ export default {
         ...artist,
         similar: artist.similar.artist.map(similarArtist => similarArtist.name)
       }
-      console.log(formattedArtist);
       return formattedArtist;
     }
   }
