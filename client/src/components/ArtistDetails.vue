@@ -7,7 +7,7 @@
       </ul>
     <h5>Top albums:</h5>
       <ul>
-        <li v-for="album in topalbums">{{album.name}}</li>
+        <li v-for="album in topalbums" @click="handleAlbumClick(album.mbid)">{{album.name}}</li>
       </ul>
     <h5>Top tracks:</h5>
       <ul>
@@ -39,6 +39,9 @@ export default {
   methods: {
     handleArtistClick(artist) {
       eventBus.$emit('artist-selected', {name: artist})
+    },
+    handleAlbumClick (mbid) {
+      eventBus.$emit('album-selected', mbid);
     },
     selectPlaylist(track) {
       this.selectedTrack = track;
