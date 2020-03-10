@@ -2,7 +2,7 @@
   <div id="app">
     <h1>Spot<span id="dot"></span><span id="fm">fm</span></h1>
     <search-form></search-form>
-    <artist-details :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
+    <artist-details v-if="selectedArtistDetails" :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
     <artists-list v-if='searchedArtists' :artists="searchedArtists"></artists-list>
     <albums-list v-if='searchedAlbums' :albums="searchedAlbums"/>
     <tracks-list v-if='searchedTracks' :tracks="searchedTracks"/>
@@ -52,20 +52,17 @@ export default {
   mounted() {
 
     eventBus.$on('submit-artist', (artist) => {
-      this.searchedAlbums = '';
-      this.searchedTracks = '';
+      this.clear();
       MusicService.getArtists(artist)
       .then(res => this.searchedArtists = res )
     }),
     eventBus.$on('submit-album', (album) => {
-      this.searchedArtists = '';
-      this.searchedTracks = '';
+    this.clear();
       MusicService.getAlbums(album)
       .then(res => this.searchedAlbums = res )
     }),
     eventBus.$on('submit-track', (track) => {
-      this.searchedArtists = '';
-      this.searchedAlbums = '';
+      this.clear();
       MusicService.getTracks(track)
       .then(res => this.searchedTracks = res )
     })
@@ -82,6 +79,7 @@ export default {
       .then(res => this.topTracks = res)
     })
     eventBus.$on('album-selected', mbid => {
+      this.clear();
       MusicService.getAlbumTracks(mbid)
       .then(res => this.albumTracks = this.formatAlbum(res))
     })
@@ -93,6 +91,10 @@ export default {
       this.searchedArtists= '';
       this.searchedAlbums ='';
       this.searchedTracks = '';
+      // this.selectedArtistDetails = {};
+      this.topAlbums = [];
+      this.topTracks = [];
+      this.albumTracks = [];
     },
     formatAlbum: function(data) {
       return data.map(track => {

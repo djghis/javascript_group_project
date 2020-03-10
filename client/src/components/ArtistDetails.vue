@@ -1,5 +1,5 @@
 <template lang="html">
-  <div v-if="artist" id="artistDetails">
+  <div  id="artistDetails">
     <h3>{{artist.name}}</h3>
     <h4>Similar artists:</h4>
     <h5>{{this.similarArtists}}</h5>
