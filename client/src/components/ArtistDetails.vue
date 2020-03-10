@@ -3,7 +3,7 @@
     <h3>{{artist.name}}</h3>
     <h4>Similar artists:</h4>
       <ul>
-        <li v-for="artist in artist.similar">{{artist}}</li>
+        <li @click="handleClick(artist)" v-for="artist in artist.similar">{{artist}}</li>
       </ul>
     <!-- <h5>{{this.similarArtists}}</h5>
     <h4>Top albums:</h4>
@@ -24,6 +24,11 @@ export default {
       similar: [],
       topThreeAlbums: [],
       topThreeTracks: []
+    }
+  },
+  methods: {
+    handleClick(artist) {
+      eventBus.$emit('artist-selected', artist)
     }
   }
   //   topAlbums: function() {
