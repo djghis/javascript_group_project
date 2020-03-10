@@ -2,7 +2,7 @@
 <div class="">
   <ul>
     <li v-for="(track, index) in tracks" :key="index">{{track.name}} by {{track.artist}}
-      <button @click="getForm(track)" type="button" name="add">+</button>
+      <button @click="selectPlaylist(track)" type="button">+</button>
       <div v-if="selectedTrack === track">
         <select v-model="selectedPlaylist">
           <option v-for="(playlist, index) in playlists" :key='index' :value='playlist'>{{playlist.name}}</option>
@@ -16,6 +16,7 @@
 
 <script>
 import {eventBus} from '@/main.js';
+
 export default {
   name: "tracks-list",
   props:['tracks', 'playlists'],
@@ -26,7 +27,7 @@ export default {
     }
   },
   methods: {
-    getForm: function(track) {
+    selectPlaylist: function(track) {
       this.selectedTrack = track;
     },
     addTrack: function() {

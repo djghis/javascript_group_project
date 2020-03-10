@@ -9,7 +9,7 @@
         <albums-list v-if='searchedAlbums' :albums="searchedAlbums"/>
         <tracks-list v-if='searchedTracks' :tracks="searchedTracks" :playlists="playlists"/>
         <tracks-list v-if='albumTracks' :tracks="albumTracks" :playlists="playlists"/>
-        <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks"/>
+        <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks" :playlists="playlists"/>
       </div>
       <div class="border"><playlist :playlists='playlists'/></div>
       </div>
@@ -104,13 +104,12 @@ export default {
       };
       payload.tracks.push(data[0]);
 
-      // TODO: Playlists aren't updating properly when adding new songs
+      // THIS NEEDS TO BE FIXED, DOES NOT GET UPDATED BEFORE PAGE REFRESHED
+
       PlaylistService.updatePlaylist(payload, id)
-        .then(res => {
-          PlaylistService.getPlaylists()
-            .then(res => this.playlists = res)
-        });
+        .then(res => this.playlists = [...this.playlists, res])
     });
+
   },
   methods: {
     clear: function() {

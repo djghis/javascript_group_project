@@ -3,11 +3,19 @@
     <h2>Top of the charts</h2>
     <h4>Top artists</h4>
       <ul>
-        <li v-for="artist in topArtists">{{artist}}</li>
+        <li v-for="artist in topArtists" @click="handleArtistClick(artist)">{{artist}}</li>
       </ul>
     <h4>Top tracks</h4>
       <ul>
-        <li v-for="track in topTracks">{{track.name}} by {{track.artist}}</li>
+        <li v-for="track in topTracks">{{track.name}} by {{track.artist}}
+          <button @click="selectPlaylist(track)" type="button">+</button>
+          <div v-if="selectedTrack === track">
+            <select v-model="selectedPlaylist">
+              <option v-for="(playlist, index) in playlists" :key='index' :value='playlist'>{{playlist.name}}</option>
+            </select>
+            <button @click="addTrack" type="button">Add to playlist</button>
+          </div>
+        </li>
       </ul>
     <h4>Top tags</h4>
       <ul>
@@ -17,14 +25,18 @@
 </template>
 
 <script>
+import {eventBus} from '../main.js';
 
 export default {
   name: 'chart-component',
+  props: ['playlists'],
   data() {
     return {
       topTracks: [],
       topArtists: [],
-      topTags: []
+      topTags: [],
+      selectedTrack: null,
+      selectedPlaylist: null
     };
   },
   mounted() {
@@ -33,7 +45,16 @@ export default {
     this.fetchTopTracks();
   },
   methods: {
-
+    handleArtistClick(artist) {
+      eventBus.$emit('artist-selected', {name: artist})
+    },
+    selectPlaylist(track) {
+      this.selectedTrack = track;
+    },
+    addTrack() {
+      const data = [this.selectedTrack, this.selectedPlaylist];
+      eventBus.$emit('add-track-to-playlist', data);
+    },
     // move fetches to MusicService (ChartService??)
 
     fetchTopArtists() {

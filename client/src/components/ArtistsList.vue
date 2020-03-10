@@ -22,8 +22,4 @@ export default {
 </script>
 
 <style lang="css" scoped>
-li:hover {
-  opacity: 70%;
-  color: green;
-}
 </style>

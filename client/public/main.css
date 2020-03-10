@@ -9,3 +9,8 @@ li {
   list-style: none;
   padding: 0.5em 0.5em;
 }
+
+li:hover {
+  opacity: 70%;
+  color: green;
+}
