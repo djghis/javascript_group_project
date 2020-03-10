@@ -4,7 +4,7 @@
     <div id="grid">
       <div id="search"><search-form></search-form></div>
       <div class="border">
-        <artist-details v-if="selectedArtistDetails" :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
+        <artist-details v-if="selectedArtistDetails" :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks" :playlists="playlists"/>
         <artists-list v-if='searchedArtists' :artists="searchedArtists"/>
         <albums-list v-if='searchedAlbums' :albums="searchedAlbums"/>
         <tracks-list v-if='searchedTracks' :tracks="searchedTracks" :playlists="playlists"/>
