@@ -1,17 +1,14 @@
 <template lang="html">
   <div>
-    <form @submit.prevent="handleClickArtist">
-      <input v-model='artist' type="text" placeholder="Search for artists">
+    <div class="searchContainer">
+      <div class="searchBox" @click="showSearchBar('artist')">Artist</div>
+      <div class="searchBox" @click="showSearchBar('album')">Album</div>
+      <div class="searchBox" @click="showSearchBar('track')">Track</div>
+    </div>
+    <div class="searchBarContainer" v-if="!!searchType">
+      <input v-model='searchValue' type="text" :placeholder="searchPlaceholder" @keyup="search">
       <input type="submit" value="Go">
-    </form>
-    <form @submit.prevent="handleClickAlbum">
-      <input v-model='album' type="text" placeholder="Search for albums">
-      <input type="submit" value="Go">
-    </form>
-    <form @submit.prevent="handleClickTrack">
-      <input v-model='track' type="text" placeholder="Search for songs">
-      <input type="submit" value="Go">
-    </form>
+    </div>
   </div>
 </template>
 
@@ -21,24 +18,22 @@ export default {
   name: 'search-form',
   data() {
     return {
-      artist: '',
-      album: '',
-      track: ''
+      searchValue: '',
+      searchType: undefined,
+      searchPlaceholder: '',
     }
   },
   methods: {
-    handleClickArtist: function () {
-      eventBus.$emit('submit-artist', this.artist);
-      this.artist = '';
+    showSearchBar: function(type) {
+      this.searchType = type;
+      this.searchPlaceholder = `Search for ${type}s`;
+      this.searchValue = '';
     },
-    handleClickAlbum: function () {
-      eventBus.$emit('submit-album', this.album);
-      this.album = '';
+    search: function() {
+      if (!!this.searchValue) {
+        eventBus.$emit(`submit-${this.searchType}`, this.searchValue);
+      }
     },
-    handleClickTrack: function () {
-      eventBus.$emit('submit-track', this.track);
-      this.track = '';
-    }
   }
 }
 </script>
@@ -56,6 +51,7 @@ input {
   font-size: 1.2em;
   padding: 0.5em 1em;
   margin: 0.5em 0.5em;
+  width: 70%;
 }
 
 input[type=submit] {
@@ -69,6 +65,22 @@ input[type=submit] {
 input[type=submit]:hover {
   opacity: 90%;
   color: green;
+}
+
+.searchContainer {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.searchBox {
+  width: 30%;
+  border: 1px solid black;
+  display: inline-block;
+  text-align: center;
+}
+
+.searchBarContainer {
+  width: 100%;
 }
 
 </style>
