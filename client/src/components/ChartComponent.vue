@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import MusicService from '../services/MusicService.js';
 import {eventBus} from '../main.js';
 
 export default {
@@ -40,9 +41,12 @@ export default {
     };
   },
   mounted() {
-    this.fetchTopTags();
-    this.fetchTopArtists();
-    this.fetchTopTracks();
+    MusicService.fetchTopTags()
+      .then(data => this.topTags = this.formatTags(data));
+    MusicService.fetchTopArtists()
+      .then(data => this.topArtists = this.formatArtists(data));
+    MusicService.fetchTopTracks()
+      .then(data => this.topTracks = this.formatTracks(data));
   },
   methods: {
     handleArtistClick(artist) {
@@ -54,23 +58,6 @@ export default {
     addTrack() {
       const data = [this.selectedTrack, this.selectedPlaylist];
       eventBus.$emit('add-track-to-playlist', data);
-    },
-    // move fetches to MusicService (ChartService??)
-
-    fetchTopArtists() {
-      fetch('http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&limit=3&api_key=7c5633ed04fb1140593f4c642ba29c60&format=json')
-      .then(res => res.json())
-      .then(data => this.topArtists = this.formatArtists(data));
-    },
-    fetchTopTracks() {
-      fetch('http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&limit=3&api_key=7c5633ed04fb1140593f4c642ba29c60&format=json')
-      .then(res => res.json())
-      .then(data => this.topTracks = this.formatTracks(data));
-    },
-    fetchTopTags() {
-      fetch('http://ws.audioscrobbler.com/2.0/?method=chart.gettoptags&limit=3&api_key=7c5633ed04fb1140593f4c642ba29c60&format=json')
-      .then(res => res.json())
-      .then(data => this.topTags = this.formatTags(data));
     },
     formatArtists(data) {
       const filteredData = data.artists.artist.map(artist => artist.name);

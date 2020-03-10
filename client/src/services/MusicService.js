@@ -2,6 +2,21 @@ const baseURL = `http://ws.audioscrobbler.com/2.0/` // basic format
 
 export default {
 
+  fetchTopArtists() {
+    return fetch(`${baseURL}?method=chart.gettopartists&limit=3&api_key=${process.env.VUE_APP_API_KEY}&format=json`)
+      .then(res => res.json())
+  },
+
+  fetchTopTracks() {
+    return fetch(`${baseURL}?method=chart.gettoptracks&limit=3&api_key=${process.env.VUE_APP_API_KEY}&format=json`)
+      .then(res => res.json())
+  },
+
+  fetchTopTags() {
+    return fetch(`${baseURL}?method=chart.gettoptags&limit=3&api_key=${process.env.VUE_APP_API_KEY}&format=json`)
+      .then(res => res.json())
+  },
+
   getArtists(artist) {
     const url = `${baseURL}?method=artist.search&artist=${artist}&api_key=${process.env.VUE_APP_API_KEY}&format=json`;
     return fetch(url)
