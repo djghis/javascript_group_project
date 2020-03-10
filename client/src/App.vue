@@ -13,7 +13,7 @@
         <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks"/>
       </div>
       <playlist :playlists='playlists'/>
-    </div>
+      </div>
     <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" name="" value="Clear">
 
   </div>
@@ -149,7 +149,6 @@ export default {
   justify-content: center;
   margin-left: 10%;
   margin-left: 10%;
-  padding-bottom: 40rem;
   padding-left: 2rem;
   padding-right: 2rem;
   background-color: #fcfdff;

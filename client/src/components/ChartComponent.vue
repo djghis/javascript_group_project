@@ -33,6 +33,9 @@ export default {
     this.fetchTopTracks();
   },
   methods: {
+
+    // move fetches to MusicService (ChartService??)
+    
     fetchTopArtists(){
       fetch('http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&limit=3&api_key=7c5633ed04fb1140593f4c642ba29c60&format=json')
       .then(res => res.json())
@@ -71,8 +74,6 @@ export default {
 <style lang="css" scoped>
 
 #charts {
-  display: block;
-  /* max-width: 30%; */
   padding: 0.1em 0.5em;
   margin: 0.5em 0.1em;
   border: 3px solid red;

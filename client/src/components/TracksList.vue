@@ -11,7 +11,6 @@
       </div>
     </li>
   </ul>
-  <button type="button" name="addAll">Add All</button>
 </div>
 </template>
 
