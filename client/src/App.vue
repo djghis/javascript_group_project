@@ -84,7 +84,7 @@ export default {
     // look into promise all
     eventBus.$on('artist-selected', artist => {
       MusicService.getArtistInfo(artist.name)
-      .then(res => this.selectedArtistDetails = res)
+      .then(res => this.selectedArtistDetails = this.formatSelectedArtist(res))
     })
     eventBus.$on('artist-selected', artist => {
       MusicService.getArtistAlbums(artist.name)
@@ -130,7 +130,14 @@ export default {
         track.artist = track.artist.name;
         return track
       })
-
+    },
+    formatSelectedArtist: function(artist) {
+      const formattedArtist = {
+        ...artist,
+        similar: artist.similar.artist.map(similarArtist => similarArtist.name)
+      }
+      console.log(formattedArtist);
+      return formattedArtist;
     }
   }
 }
