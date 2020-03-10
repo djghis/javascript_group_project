@@ -1,6 +1,10 @@
 <template>
   <div id="app">
     <h1>Spot<span id="dot"></span><span id="fm">fm</span></h1>
+    <!-- <vue-audio :file="file1" /> -->
+    <audio controls src="">
+
+    </audio>
     <search-form></search-form>
     <artist-details :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
     <artists-list v-if='searchedArtists' :artists="searchedArtists"></artists-list>
@@ -22,6 +26,7 @@ import TracksList from './components/TracksList.vue';
 import { eventBus } from '@/main.js';
 import ChartComponent from './components/ChartComponent.vue';
 import ArtistDetails from './components/ArtistDetails.vue';
+import VueAudio from 'vue-audio';
 
 
 export default {
@@ -45,7 +50,8 @@ export default {
     "chart-component": ChartComponent,
     "artist-details": ArtistDetails,
     "albums-list": AlbumsList,
-    "tracks-list": TracksList
+    "tracks-list": TracksList,
+    'vue-audio': VueAudio
   },
   mounted() {
 
