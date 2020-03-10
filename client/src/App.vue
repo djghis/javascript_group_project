@@ -6,6 +6,7 @@
     <artists-list v-if='searchedArtists' :artists="searchedArtists"></artists-list>
     <albums-list v-if='searchedAlbums' :albums="searchedAlbums"/>
     <tracks-list v-if='searchedTracks' :tracks="searchedTracks"/>
+    <tracks-list v-if='albumTracks' :tracks="albumTracks"/>
     <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks"/>
     <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" name="" value="Clear">
   </div>
@@ -36,7 +37,8 @@ export default {
       topTracks: [],
       searchedArtists: '',
       searchedAlbums: '',
-      searchedTracks: ''
+      searchedTracks: '',
+      albumTracks: []
     }
   },
   components: {
@@ -79,6 +81,11 @@ export default {
       MusicService.getArtistTracks(artist.name)
       .then(res => this.topTracks = res)
     })
+    eventBus.$on('album-selected', mbid => {
+      MusicService.getAlbumTracks(mbid)
+      .then(res => this.albumTracks = this.formatAlbum(res))
+    })
+
 
   },
   methods: {
@@ -86,6 +93,13 @@ export default {
       this.searchedArtists= '';
       this.searchedAlbums ='';
       this.searchedTracks = '';
+    },
+    formatAlbum: function(data) {
+      return data.map(track => {
+        track.artist = track.artist.name;
+        return track
+      })
+
     }
   }
 }
