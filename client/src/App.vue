@@ -5,10 +5,10 @@
     <artist-details :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
     <artists-list v-if='searchedArtists' :artists="searchedArtists"></artists-list>
     <albums-list v-if='searchedAlbums' :albums="searchedAlbums"/>
-    <tracks-list v-if='searchedTracks' :tracks="searchedTracks"/>
-    <tracks-list v-if='albumTracks' :tracks="albumTracks"/>
+    <tracks-list v-if='searchedTracks' :tracks="searchedTracks" :playlists="playlists"/>
+    <tracks-list v-if='albumTracks' :tracks="albumTracks" :playlists="playlists"/>
     <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks"/>
-    <playlist/>
+    <playlist :playlists='playlists'/>
     <playlist-form/>
     <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" name="" value="Clear">
 
@@ -60,6 +60,9 @@ export default {
   },
   mounted() {
 
+    PlaylistService.getPlaylists()
+    .then(res => this.playlists = res)
+
     eventBus.$on('submit-artist', (artist) => {
       // this.clear();
       MusicService.getArtists(artist)
@@ -95,6 +98,18 @@ export default {
     eventBus.$on('add-playlist', payload => {
       PlaylistService.postPlaylist(payload)
       .then(res => this.playlists.push(res))
+    })
+    eventBus.$on('add-track-to-playlist', data => {
+      let id = data[1]._id
+      let payload = {
+        name: data[1].name,
+        tracks: data[1].tracks
+      }
+      payload.tracks.push(data[0])
+      PlaylistService.updatePlaylist(payload, id)
+      .then(res => {PlaylistService.getPlaylists()
+      .then(res => this.playlists = res)});
+
     })
 
 
