@@ -4,7 +4,7 @@
 
     <div id="grid">
       <div id="search"><search-form></search-form></div>
-      <div>
+      <div class="border">
         <artist-details :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
         <artists-list v-if='searchedArtists' :artists="searchedArtists"></artists-list>
         <albums-list v-if='searchedAlbums' :albums="searchedAlbums"/>
@@ -12,7 +12,7 @@
         <tracks-list v-if='albumTracks' :tracks="albumTracks" :playlists="playlists"/>
         <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks"/>
       </div>
-      <playlist :playlists='playlists'/>
+      <div class="border"><playlist :playlists='playlists'/></div>
       </div>
     <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" name="" value="Clear">
 
@@ -67,17 +67,17 @@ export default {
     .then(res => this.playlists = res)
 
     eventBus.$on('submit-artist', (artist) => {
-      // this.clear();
+      this.clear();
       MusicService.getArtists(artist)
       .then(res => this.searchedArtists = res )
     }),
     eventBus.$on('submit-album', (album) => {
-    // this.clear();
+    this.clear();
       MusicService.getAlbums(album)
       .then(res => this.searchedAlbums = res )
     }),
     eventBus.$on('submit-track', (track) => {
-      // this.clear();
+      this.clear();
       MusicService.getTracks(track)
       .then(res => this.searchedTracks = res )
     })
@@ -120,7 +120,7 @@ export default {
       this.searchedArtists= '';
       this.searchedAlbums ='';
       this.searchedTracks = '';
-      // this.selectedArtistDetails = {};
+      this.selectedArtistDetails = {};
       this.topAlbums = [];
       this.topTracks = [];
       this.albumTracks = [];
@@ -165,6 +165,12 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 3em;
+}
+
+.border {
+  border: 3px solid red;
+  padding: 0.5em 0.5em;
+  margin: 0.5em 0.5em;
 }
 
 h1 {
