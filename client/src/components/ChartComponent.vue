@@ -58,6 +58,7 @@ export default {
     },
     formatTracks(data){
       const filteredData = []
+      //change to a map instead of for each
       data.tracks.track.forEach(track => {
         filteredData.push({name: track.name, artist: track.artist.name})
       })
@@ -71,7 +72,7 @@ export default {
 
 #charts {
   display: block;
-  max-width: 30%;
+  /* max-width: 30%; */
   padding: 0.1em 0.5em;
   margin: 0.5em 0.1em;
   border: 3px solid red;

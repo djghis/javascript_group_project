@@ -1,21 +1,28 @@
-<template lang="html">
-    <form class="" action="index.html" method="post">
-      <label for="">Artist</label>
-      <input v-model= type="text" name="" value="">
-      <input type="submit" name="" value="">
+<!-- <template lang="html">
+    <form @submit.prevent="handleSubmit">
+      <label for="">Playlist</label>
+      <input v-model='name' type="text">
+      <input type="submit" name="" value="Add">
     </form>
 </template>
 
 <script>
+import { eventBus } from '@/main.js';
 export default {
+  name: 'playlist-form',
   data() {
     return {
-      artist: ''
+      name: ''
     }
-
+  },
+  methods: {
+    handleSubmit: function () {
+      const payload = {name: this.name, tracks: []}
+      eventBus.$emit('add-playlist', payload)
+    }
   }
 }
 </script>
 
 <style lang="css" scoped>
-</style>
+</style> -->

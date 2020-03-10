@@ -1,13 +1,21 @@
 <template>
   <div id="app">
     <h1>Spot<span id="dot"></span><span id="fm">fm</span></h1>
-    <search-form></search-form>
-    <artist-details v-if="selectedArtistDetails" :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
-    <artists-list v-if='searchedArtists' :artists="searchedArtists"></artists-list>
-    <albums-list v-if='searchedAlbums' :albums="searchedAlbums"/>
-    <tracks-list v-if='searchedTracks' :tracks="searchedTracks"/>
-    <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks"/>
+
+    <div id="grid">
+      <div id="search"><search-form></search-form></div>
+      <div>
+        <artist-details :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
+        <artists-list v-if='searchedArtists' :artists="searchedArtists"></artists-list>
+        <albums-list v-if='searchedAlbums' :albums="searchedAlbums"/>
+        <tracks-list v-if='searchedTracks' :tracks="searchedTracks" :playlists="playlists"/>
+        <tracks-list v-if='albumTracks' :tracks="albumTracks" :playlists="playlists"/>
+        <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks"/>
+      </div>
+      <playlist :playlists='playlists'/>
+    </div>
     <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" name="" value="Clear">
+
   </div>
 </template>
 
@@ -15,13 +23,17 @@
 
 import MusicService from './services/MusicService.js';
 import PlaylistService from './services/PlaylistService.js';
+
 import SearchForm from './components/SearchForm.vue';
 import ArtistsList from './components/ArtistsList.vue';
 import AlbumsList from './components/AlbumsList.vue';
 import TracksList from './components/TracksList.vue';
-import { eventBus } from '@/main.js';
 import ChartComponent from './components/ChartComponent.vue';
 import ArtistDetails from './components/ArtistDetails.vue';
+import Playlist from './components/Playlist.vue';
+// import PlaylistsForm from './components/PlaylistsForm.vue';
+
+import { eventBus } from '@/main.js';
 
 
 export default {
@@ -36,7 +48,8 @@ export default {
       topTracks: [],
       searchedArtists: '',
       searchedAlbums: '',
-      searchedTracks: ''
+      searchedTracks: '',
+      albumTracks: []
     }
   },
   components: {
@@ -45,28 +58,30 @@ export default {
     "chart-component": ChartComponent,
     "artist-details": ArtistDetails,
     "albums-list": AlbumsList,
-    "tracks-list": TracksList
+    "tracks-list": TracksList,
+    "playlist": Playlist
   },
   mounted() {
 
+    PlaylistService.getPlaylists()
+    .then(res => this.playlists = res)
+
     eventBus.$on('submit-artist', (artist) => {
-      this.searchedAlbums = '';
-      this.searchedTracks = '';
+      // this.clear();
       MusicService.getArtists(artist)
       .then(res => this.searchedArtists = res )
     }),
     eventBus.$on('submit-album', (album) => {
-      this.searchedArtists = '';
-      this.searchedTracks = '';
+    // this.clear();
       MusicService.getAlbums(album)
       .then(res => this.searchedAlbums = res )
     }),
     eventBus.$on('submit-track', (track) => {
-      this.searchedArtists = '';
-      this.searchedAlbums = '';
+      // this.clear();
       MusicService.getTracks(track)
       .then(res => this.searchedTracks = res )
     })
+    // look into promise all
     eventBus.$on('artist-selected', artist => {
       MusicService.getArtistInfo(artist.name)
       .then(res => this.selectedArtistDetails = res)
@@ -79,6 +94,25 @@ export default {
       MusicService.getArtistTracks(artist.name)
       .then(res => this.topTracks = res)
     })
+    eventBus.$on('album-selected', mbid => {
+      MusicService.getAlbumTracks(mbid)
+      .then(res => this.albumTracks = this.formatAlbum(res))
+    })
+    eventBus.$on('add-playlist', payload => {
+      PlaylistService.postPlaylist(payload)
+      .then(res => this.playlists.push(res))
+    })
+    eventBus.$on('add-track-to-playlist', data => {
+      let id = data[1]._id
+      let payload = {
+        name: data[1].name,
+        tracks: data[1].tracks
+      }
+      payload.tracks.push(data[0])
+      PlaylistService.updatePlaylist(payload, id)
+      .then(res => {PlaylistService.getPlaylists()
+      .then(res => this.playlists = res)});
+    })
 
   },
   methods: {
@@ -86,6 +120,17 @@ export default {
       this.searchedArtists= '';
       this.searchedAlbums ='';
       this.searchedTracks = '';
+      // this.selectedArtistDetails = {};
+      this.topAlbums = [];
+      this.topTracks = [];
+      this.albumTracks = [];
+    },
+    formatAlbum: function(data) {
+      return data.map(track => {
+        track.artist = track.artist.name;
+        return track
+      })
+
     }
   }
 }
@@ -109,6 +154,18 @@ export default {
   padding-right: 2rem;
   background-color: #fcfdff;
   opacity: 90%;
+}
+
+#search {
+  display: grid;
+  grid-template-columns: repeat(1fr, 3);
+  grid-column: 1/3;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 3em;
 }
 
 h1 {

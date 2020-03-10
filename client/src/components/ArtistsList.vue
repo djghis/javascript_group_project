@@ -9,7 +9,6 @@
 
 <script>
 import {eventBus} from '../main.js';
-import ArtistDetails from './ArtistDetails.vue';
 
 export default {
   name: 'artists-list',
