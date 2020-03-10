@@ -1,15 +1,19 @@
 <template>
   <div id="app">
     <h1>Spot<span id="dot"></span><span id="fm">fm</span></h1>
-    <search-form></search-form>
-    <artist-details :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
-    <artists-list v-if='searchedArtists' :artists="searchedArtists"></artists-list>
-    <albums-list v-if='searchedAlbums' :albums="searchedAlbums"/>
-    <tracks-list v-if='searchedTracks' :tracks="searchedTracks" :playlists="playlists"/>
-    <tracks-list v-if='albumTracks' :tracks="albumTracks" :playlists="playlists"/>
-    <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks"/>
-    <playlist :playlists='playlists'/>
-    <playlist-form/>
+
+    <div id="grid">
+      <div id="search"><search-form></search-form></div>
+      <div>
+        <artist-details :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
+        <artists-list v-if='searchedArtists' :artists="searchedArtists"></artists-list>
+        <albums-list v-if='searchedAlbums' :albums="searchedAlbums"/>
+        <tracks-list v-if='searchedTracks' :tracks="searchedTracks" :playlists="playlists"/>
+        <tracks-list v-if='albumTracks' :tracks="albumTracks" :playlists="playlists"/>
+        <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks"/>
+      </div>
+      <playlist :playlists='playlists'/>
+    </div>
     <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" name="" value="Clear">
 
   </div>
@@ -27,7 +31,7 @@ import TracksList from './components/TracksList.vue';
 import ChartComponent from './components/ChartComponent.vue';
 import ArtistDetails from './components/ArtistDetails.vue';
 import Playlist from './components/Playlist.vue';
-import PlaylistsForm from './components/PlaylistsForm.vue';
+// import PlaylistsForm from './components/PlaylistsForm.vue';
 
 import { eventBus } from '@/main.js';
 
@@ -55,8 +59,7 @@ export default {
     "artist-details": ArtistDetails,
     "albums-list": AlbumsList,
     "tracks-list": TracksList,
-    "playlist": Playlist,
-    "playlist-form": PlaylistsForm
+    "playlist": Playlist
   },
   mounted() {
 
@@ -109,9 +112,7 @@ export default {
       PlaylistService.updatePlaylist(payload, id)
       .then(res => {PlaylistService.getPlaylists()
       .then(res => this.playlists = res)});
-
     })
-
 
   },
   methods: {
@@ -153,6 +154,18 @@ export default {
   padding-right: 2rem;
   background-color: #fcfdff;
   opacity: 90%;
+}
+
+#search {
+  display: grid;
+  grid-template-columns: repeat(1fr, 3);
+  grid-column: 1/3;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 3em;
 }
 
 h1 {

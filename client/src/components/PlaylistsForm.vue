@@ -1,4 +1,4 @@
-<template lang="html">
+<!-- <template lang="html">
     <form @submit.prevent="handleSubmit">
       <label for="">Playlist</label>
       <input v-model='name' type="text">
@@ -25,4 +25,4 @@ export default {
 </script>
 
 <style lang="css" scoped>
-</style>
+</style> -->
