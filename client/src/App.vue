@@ -1,12 +1,11 @@
 <template>
   <div id="app">
     <h1>Spot<span id="dot"></span><span id="fm">fm</span></h1>
-
     <div id="grid">
       <div id="search"><search-form></search-form></div>
       <div class="border">
         <artist-details v-if="selectedArtistDetails" :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
-        <artists-list v-if='searchedArtists' :artists="searchedArtists"></artists-list>
+        <artists-list v-if='searchedArtists' :artists="searchedArtists"/>
         <albums-list v-if='searchedAlbums' :albums="searchedAlbums"/>
         <tracks-list v-if='searchedTracks' :tracks="searchedTracks" :playlists="playlists"/>
         <tracks-list v-if='albumTracks' :tracks="albumTracks" :playlists="playlists"/>
@@ -15,7 +14,6 @@
       <div class="border"><playlist :playlists='playlists'/></div>
       </div>
     <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" name="" value="Clear">
-
   </div>
 </template>
 
@@ -31,9 +29,8 @@ import TracksList from './components/TracksList.vue';
 import ChartComponent from './components/ChartComponent.vue';
 import ArtistDetails from './components/ArtistDetails.vue';
 import Playlist from './components/Playlist.vue';
-// import PlaylistsForm from './components/PlaylistsForm.vue';
 
-import { eventBus } from '@/main.js';
+import {eventBus} from '@/main.js';
 
 
 export default {
@@ -62,10 +59,8 @@ export default {
     "playlist": Playlist
   },
   mounted() {
-
     PlaylistService.getPlaylists()
     .then(res => this.playlists = res)
-
     eventBus.$on('submit-artist', (artist) => {
       this.clear();
       MusicService.getArtists(artist)
@@ -81,16 +76,11 @@ export default {
       MusicService.getTracks(track)
       .then(res => this.searchedTracks = res )
     })
-    // look into promise all
     eventBus.$on('artist-selected', artist => {
       MusicService.getArtistInfo(artist.name)
       .then(res => this.selectedArtistDetails = this.formatSelectedArtist(res))
-    })
-    eventBus.$on('artist-selected', artist => {
       MusicService.getArtistAlbums(artist.name)
       .then(res => this.topAlbums = res.album)
-    })
-    eventBus.$on('artist-selected', artist => {
       MusicService.getArtistTracks(artist.name)
       .then(res => this.topTracks = res.track)
     })
@@ -120,7 +110,7 @@ export default {
       this.searchedArtists= '';
       this.searchedAlbums ='';
       this.searchedTracks = '';
-      this.selectedArtistDetails = {};
+      this.selectedArtistDetails = null;
       this.topAlbums = [];
       this.topTracks = [];
       this.albumTracks = [];
