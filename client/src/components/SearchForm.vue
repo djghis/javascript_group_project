@@ -22,9 +22,6 @@
 import { eventBus } from '@/main.js';
 export default {
   name: 'search-form',
-  components: {
-
-  },
   data() {
     return {
       artist: '',

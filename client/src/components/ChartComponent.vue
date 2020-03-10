@@ -58,6 +58,7 @@ export default {
     },
     formatTracks(data){
       const filteredData = []
+      //change to a map instead of for each
       data.tracks.track.forEach(track => {
         filteredData.push({name: track.name, artist: track.artist.name})
       })

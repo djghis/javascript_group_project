@@ -14,12 +14,8 @@
 <script>
 export default {
   name: "tracks-list",
-  props:['tracks'],
-  methods: {
-
-    }
-
-  }
+  props:['tracks']
+}
 
 </script>
 
