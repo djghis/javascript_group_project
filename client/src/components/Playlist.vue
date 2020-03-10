@@ -7,9 +7,9 @@
         </details></li>
       </ul>
     <form @submit.prevent="handleSubmit">
-      <label for="">Playlist</label>
+      <label>Playlist</label>
       <input v-model='name' type="text">
-      <input type="submit" name="" value="Add">
+      <input type="submit" value="Add">
     </form>
   </div>
 </template>
@@ -28,17 +28,17 @@ export default {
     }
   },
   mounted() {
-    this.fetchPlaylists()
+    this.fetchPlaylists();
   },
   methods: {
     handleSubmit: function () {
-      const payload = {name: this.name, tracks: []}
-      eventBus.$emit('add-playlist', payload)
-      this.myPlaylists.push(payload)
+      const payload = {name: this.name, tracks: []};
+      eventBus.$emit('add-playlist', payload);
+      this.myPlaylists.push(payload);
     },
     fetchPlaylists: function() {
       PlaylistService.getPlaylists()
-      .then(res => this.myPlaylists = res)
+        .then(res => this.myPlaylists = res);
     }
   }
 }

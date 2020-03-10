@@ -1,25 +1,22 @@
 <template lang="html">
   <div>
-  <form @submit.prevent="handleClickArtist">
-    <!-- <label for="">Artist</label> -->
-    <input v-model='artist' type="text" placeholder="Search for artists">
-    <input type="submit" value="Go">
-  </form>
-  <form @submit.prevent="handleClickAlbum">
-    <!-- <label for="">Album</label> -->
-    <input v-model='album' type="text" placeholder="Search for albums">
-    <input type="submit" value="Go">
-  </form>
-  <form @submit.prevent="handleClickTrack">
-    <!-- <label for="">Track</label> -->
-    <input v-model='track' type="text" placeholder="Search for songs">
-    <input type="submit" value="Go">
-  </form>
-</div>
+    <form @submit.prevent="handleClickArtist">
+      <input v-model='artist' type="text" placeholder="Search for artists">
+      <input type="submit" value="Go">
+    </form>
+    <form @submit.prevent="handleClickAlbum">
+      <input v-model='album' type="text" placeholder="Search for albums">
+      <input type="submit" value="Go">
+    </form>
+    <form @submit.prevent="handleClickTrack">
+      <input v-model='track' type="text" placeholder="Search for songs">
+      <input type="submit" value="Go">
+    </form>
+  </div>
 </template>
 
 <script>
-import { eventBus } from '@/main.js';
+import {eventBus} from '@/main.js';
 export default {
   name: 'search-form',
   data() {
@@ -41,8 +38,8 @@ export default {
     handleClickTrack: function () {
       eventBus.$emit('submit-track', this.track);
       this.track = '';
+    }
   }
-}
 }
 </script>
 

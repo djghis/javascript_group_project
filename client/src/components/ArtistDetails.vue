@@ -17,14 +17,13 @@
 </template>
 
 <script>
-import {eventBus} from '../main.js'
+import {eventBus} from '../main.js';
 
 export default {
   name: 'artist-details',
   props: ['artist', 'topalbums', 'toptracks']
-}
+};
 </script>
 
 <style lang="css" scoped>
-
 </style>

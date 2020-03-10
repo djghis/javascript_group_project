@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {eventBus} from '@/main.js'
+import {eventBus} from '@/main.js';
 export default {
   name: "tracks-list",
   props:['tracks', 'playlists'],
@@ -27,15 +27,14 @@ export default {
   },
   methods: {
     getForm: function(track) {
-      this.selectedTrack = track
+      this.selectedTrack = track;
     },
     addTrack: function() {
-      const data = [this.selectedTrack, this.selectedPlaylist]
-      eventBus.$emit('add-track-to-playlist', data)
+      const data = [this.selectedTrack, this.selectedPlaylist];
+      eventBus.$emit('add-track-to-playlist', data);
     }
   }
 }
-
 </script>
 
 <style lang="css" scoped>

@@ -7,16 +7,17 @@
 </template>
 
 <script>
-import {eventBus} from '@/main.js'
+import {eventBus} from '@/main.js';
+
 export default {
   name: "albums-list",
   props:['albums'],
   methods: {
     handleClick (mbid) {
-      eventBus.$emit('album-selected', mbid );
-      }
+      eventBus.$emit('album-selected', mbid);
     }
-}
+  }
+};
 </script>
 
 <style lang="css" scoped>

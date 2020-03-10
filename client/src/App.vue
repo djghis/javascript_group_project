@@ -13,12 +13,11 @@
       </div>
       <div class="border"><playlist :playlists='playlists'/></div>
       </div>
-    <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" name="" value="Clear">
+    <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" value="Clear">
   </div>
 </template>
 
 <script>
-
 import MusicService from './services/MusicService.js';
 import PlaylistService from './services/PlaylistService.js';
 
@@ -32,7 +31,6 @@ import Playlist from './components/Playlist.vue';
 
 import {eventBus} from '@/main.js';
 
-
 export default {
   data() {
     return {
@@ -42,7 +40,6 @@ export default {
       topTracks: [],
       topTags: [],
       topAlbums: [],
-      topTracks: [],
       searchedArtists: '',
       searchedAlbums: '',
       searchedTracks: '',
@@ -60,50 +57,60 @@ export default {
   },
   mounted() {
     PlaylistService.getPlaylists()
-    .then(res => this.playlists = res)
+      .then(res => this.playlists = res);
+
     eventBus.$on('submit-artist', (artist) => {
       this.clear();
       MusicService.getArtists(artist)
-      .then(res => this.searchedArtists = res )
-    }),
+        .then(res => this.searchedArtists = res);
+    });
+
     eventBus.$on('submit-album', (album) => {
-    this.clear();
+      this.clear();
       MusicService.getAlbums(album)
-      .then(res => this.searchedAlbums = res )
-    }),
+      .then(res => this.searchedAlbums = res);
+    });
+
     eventBus.$on('submit-track', (track) => {
       this.clear();
       MusicService.getTracks(track)
-      .then(res => this.searchedTracks = res )
-    })
+        .then(res => this.searchedTracks = res);
+    });
+
     eventBus.$on('artist-selected', artist => {
       MusicService.getArtistInfo(artist.name)
-      .then(res => this.selectedArtistDetails = this.formatSelectedArtist(res))
+        .then(res => this.selectedArtistDetails = this.formatSelectedArtist(res));
       MusicService.getArtistAlbums(artist.name)
-      .then(res => this.topAlbums = res.album)
+        .then(res => this.topAlbums = res.album);
       MusicService.getArtistTracks(artist.name)
-      .then(res => this.topTracks = res.track)
-    })
+        .then(res => this.topTracks = res.track);
+    });
+
     eventBus.$on('album-selected', mbid => {
       MusicService.getAlbumTracks(mbid)
-      .then(res => this.albumTracks = this.formatAlbum(res))
-    })
+        .then(res => this.albumTracks = this.formatAlbum(res));
+    });
+
     eventBus.$on('add-playlist', payload => {
       PlaylistService.postPlaylist(payload)
-      .then(res => this.playlists.push(res))
-    })
+        .then(res => this.playlists.push(res));
+    });
+
     eventBus.$on('add-track-to-playlist', data => {
-      let id = data[1]._id
+      let id = data[1]._id;
       let payload = {
         name: data[1].name,
-        tracks: data[1].tracks
-      }
-      payload.tracks.push(data[0])
-      PlaylistService.updatePlaylist(payload, id)
-      .then(res => {PlaylistService.getPlaylists()
-      .then(res => this.playlists = res)});
-    })
+        tracks: data[1].tracks,
+      };
+      payload.tracks.push(data[0]);
 
+      // TODO: Playlists aren't updating properly when adding new songs
+      PlaylistService.updatePlaylist(payload, id)
+        .then(res => {
+          PlaylistService.getPlaylists()
+            .then(res => this.playlists = res)
+        });
+    });
   },
   methods: {
     clear: function() {
@@ -118,25 +125,21 @@ export default {
     formatAlbum: function(data) {
       return data.map(track => {
         track.artist = track.artist.name;
-        return track
-      })
+        return track;
+      });
     },
     formatSelectedArtist: function(artist) {
       const formattedArtist = {
         ...artist,
         similar: artist.similar.artist.map(similarArtist => similarArtist.name)
-      }
+      };
       return formattedArtist;
     }
   }
 }
-
-
-
 </script>
 
 <style>
-
 @import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
 
@@ -229,6 +232,4 @@ h1 {
     opacity:1;
   }
 }
-
-
 </style>

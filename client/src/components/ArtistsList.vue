@@ -18,14 +18,12 @@ export default {
       eventBus.$emit('artist-selected', artist)
     }
   }
-}
+};
 </script>
 
 <style lang="css" scoped>
-
-  li:hover {
-    opacity: 70%;
-    color: green;
-  }
-
+li:hover {
+  opacity: 70%;
+  color: green;
+}
 </style>
