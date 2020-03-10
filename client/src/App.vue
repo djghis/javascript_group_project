@@ -2,7 +2,7 @@
   <div id="app">
     <h1>Spot<span id="dot"></span><span id="fm">fm</span></h1>
     <search-form></search-form>
-    <artist-details :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
+    <artist-details v-if="selectedArtistDetails" :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks"/>
     <artists-list v-if='searchedArtists' :artists="searchedArtists"></artists-list>
     <albums-list v-if='searchedAlbums' :albums="searchedAlbums"/>
     <tracks-list v-if='searchedTracks' :tracks="searchedTracks"/>

@@ -65,7 +65,7 @@ input {
 }
 
 input[type=submit] {
-  border-radius: 20px;
+  border-radius: 10px;
   font-size: 0.8em;
   padding: 0.5em 0.5em;
   opacity: 80%;
@@ -74,7 +74,7 @@ input[type=submit] {
 
 input[type=submit]:hover {
   opacity: 90%;
-  background-color: #ffed4f;
+  color: green;
 }
 
 </style>
