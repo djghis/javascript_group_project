@@ -2,11 +2,11 @@
 <div class="">
   <h2>Album Search</h2>
   <ul>
-    <li class="list" v-if="album.mbid" v-for="(album, index) in albums" :key="index">{{album.name}} by {{album.artist}}
-      <details ref="details" @click="handleClick(album.name, album.artist)"><summary>Tracks</summary>
+    <li v-if="album.mbid" v-for="(album, index) in albums" :key="index"><span class="bolder">{{album.name}}</span> by {{album.artist}}
+      <details @toggle="handleClick(album.name, album.artist)"><summary>Tracks</summary>
         <ul>
-          <li class="list" v-for="track in tracks">{{track.name}}
-            <button class="plus"  @click="selectPlaylist(track)" type="button">+</button>
+          <li v-for="track in tracks">{{track.name}}
+            <button class="plus" @click="selectPlaylist(track)" type="button">+</button>
             <div v-if="selectedTrack === track">
               <select v-model="selectedPlaylist">
                 <option v-for="(playlist, index) in playlists" :key='index' :value='playlist'>{{playlist.name}}</option>
@@ -56,8 +56,5 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.list:hover {
-  color: #EAF6FF;
-  cursor: default;
-}
+
 </style>
