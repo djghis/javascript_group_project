@@ -8,11 +8,11 @@
       </ul>
     <h5>Top albums:</h5>
       <ul>
-        <li class="list" v-for="album in topalbums">{{album.name}}
-          <details @toggle="handleAlbumClick(album.name, album.artist.name)"><summary>Tracks</summary>
+        <li class="list" v-for="(album, index) in topalbums">{{album.name}}
+          <details ref="details" @click="handleAlbumClick(album.name, album.artist.name)"><summary>Tracks</summary>
             <ul>
               <li v-for="track in tracks"><span class="bolder">{{track.name}}</span>
-                <button @click="selectPlaylist(track)" type="button">+</button>
+                <button class="plus" @click="selectPlaylist(track)" type="button">+</button>
                 <div v-if="selectedTrack === track">
                   <select v-model="selectedPlaylist">
                     <option v-for="(playlist, index) in playlists" :key='index' :value='playlist'>{{playlist.name}}</option>
@@ -52,10 +52,16 @@ export default {
     }
   },
   methods: {
+    closeDetails(evt) {
+      this.$refs.details.forEach(detail => {
+        detail.removeAttribute('open')
+      })
+    },
     handleArtistClick(artist) {
       eventBus.$emit('artist-selected', {name: artist})
     },
     handleAlbumClick (name, artist) {
+      this.closeDetails()
       const data = [name, artist]
       eventBus.$emit('album-selected', data);
     },
