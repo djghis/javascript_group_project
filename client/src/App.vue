@@ -224,7 +224,6 @@ export default {
 }
 
 h1 {
-  padding: 0.5em 0.5em;
   text-transform: lowercase;
   text-align: center;
   font-family: 'Lato', sans-serif;
@@ -232,6 +231,8 @@ h1 {
   color: #fcfdff;
   opacity: 80%;
   text-align: center;
+  margin-top: 0;
+  padding: 0;
 }
 
 #fm {
@@ -241,6 +242,7 @@ h1 {
 #dot {
   content: '.';
   font-size: 3em;
+  line-height: 0;
   color: #4b0082;
 }
 
