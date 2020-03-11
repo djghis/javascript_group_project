@@ -8,11 +8,11 @@
       </ul>
       <br>
     <h4>Top tracks</h4>
-      <ul>
-        <li v-for="track in topTracks">{{track.name}} by {{track.artist}}
-          <button @click="selectPlaylist(track)" type="button">+</button>
+      <ul >
+        <li class="list" v-for="track in topTracks">{{track.name}} by {{track.artist}}
+          <button class="plus" @click="selectPlaylist(track)" type="button">+</button>
           <div v-if="selectedTrack === track">
-            <select v-model="selectedPlaylist">
+            <select required v-model="selectedPlaylist">
               <option v-for="(playlist, index) in playlists" :key='index' :value='playlist'>{{playlist.name}}</option>
             </select>
             <button @click="addTrack" type="button">Add to playlist</button>
@@ -20,10 +20,6 @@
         </li>
       </ul>
       <br>
-    <h4>Top tags</h4>
-      <ul>
-        <li v-for="tag in topTags">{{tag}}</li>
-      </ul>
   </div>
 </template>
 
@@ -38,14 +34,11 @@ export default {
     return {
       topTracks: [],
       topArtists: [],
-      topTags: [],
       selectedTrack: null,
       selectedPlaylist: null
     };
   },
   mounted() {
-    MusicService.fetchTopTags()
-      .then(data => this.topTags = this.formatTags(data));
     MusicService.fetchTopArtists()
       .then(data => this.topArtists = this.formatArtists(data));
     MusicService.fetchTopTracks()
@@ -66,10 +59,6 @@ export default {
       const filteredData = data.artists.artist.map(artist => artist.name);
       return filteredData;
     },
-    formatTags(data) {
-      const filteredData = data.tags.tag.map(tag => tag.name);
-      return filteredData;
-    },
     formatTracks(data){
       return data.tracks.track.map((track) => (
         {name: track.name, artist: track.artist.name}
@@ -80,6 +69,21 @@ export default {
 </script>
 
 <style lang="css" scoped>
+  .list:hover {
+    color: #EAF6FF;
+    cursor: default;
+  }
 
+
+
+  /* select:required:invalid {
+  color: gray;
+}
+option[value=""][disabled] {
+  display: none;
+}
+option {
+  color: black;
+} */
 
 </style>

@@ -27,7 +27,7 @@
     <h5>Top tracks:</h5>
       <ul>
         <li v-for="track in toptracks">{{track.name}}
-          <button @click="selectPlaylist(track)" type="button">+</button>
+          <button class="plus" @click="selectPlaylist(track)" type="button">+</button>
           <div v-if="selectedTrack === track">
             <select v-model="selectedPlaylist">
               <option v-for="(playlist, index) in playlists" :key='index' :value='playlist'>{{playlist.name}}</option>

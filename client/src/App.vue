@@ -7,7 +7,7 @@
         <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" value="Clear">
         <artist-details v-if="selectedArtistDetails" :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks" :playlists="playlists" :tracks="albumTracks"/>
         <artists-list v-if='searchedArtists' :artists="searchedArtists"/>
-        <albums-list v-if='searchedAlbums' :albums="searchedAlbums" :tracks="albumTracks" />
+        <albums-list v-if='searchedAlbums' :albums="searchedAlbums" :tracks="albumTracks" :playlists="playlists" />
         <tracks-list v-if='searchedTracks' :tracks="searchedTracks" :playlists="playlists"/>
         <!-- <tracks-list v-if='albumTracks' :tracks="albumTracks" :playlists="playlists"/> -->
         <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks && !selectedArtistDetails && !showArtist" :playlists="playlists"/>

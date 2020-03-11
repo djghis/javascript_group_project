@@ -12,7 +12,7 @@
       </ul>
     <form @submit.prevent="handleSubmit">
       <label>Playlist </label>
-      <input v-model='name' type="text">
+      <input required v-model='name' type="text">
       <input type="submit" value="Add"/>
 
     </form>

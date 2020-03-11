@@ -1,5 +1,5 @@
 body {
-  background-image: linear-gradient(315deg, #0f2862 -10%, #000000 90%);
+  background-image: linear-gradient(315deg, #0f2862 30%, #000000 90%);
   font-family: 'Lato', sans-serif;
   color: #EAF6FF;
   font-size: 1.2em;
@@ -11,8 +11,10 @@ li {
 }
 
 li:hover {
-  opacity: 70%;
-  color:  #4b0082;
+  opacity: 90%;
+  /* text-decoration: underline; */
+  color: slategrey;
+  cursor: pointer;
 }
 
 h2 {
@@ -21,4 +23,10 @@ h2 {
 
 h4 {
   text-transform: uppercase;
+}
+
+.plus {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
 }
