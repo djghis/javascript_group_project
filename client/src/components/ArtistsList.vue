@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="">
+  <h2>Artist Search</h2>
     <ul>
       <li @click="handleClick(artist)" v-for='(artist, index) in artists' :key='index'>{{artist.name}}</li>
     </ul>

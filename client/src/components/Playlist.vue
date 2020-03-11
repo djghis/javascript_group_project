@@ -35,6 +35,8 @@ export default {
       const payload = {name: this.name, tracks: []};
       eventBus.$emit('add-playlist', payload);
       this.myPlaylists.push(payload);
+      PlaylistService.getPlaylists()
+        .then(res => this.myPlaylists = res);
     },
     fetchPlaylists: function() {
       PlaylistService.getPlaylists()

@@ -4,16 +4,18 @@
     <div id="grid">
       <div id="search"><search-form></search-form></div>
       <div class="border">
-        <artist-details v-if="selectedArtistDetails" :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks" :playlists="playlists"/>
+        <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" value="Clear">
+        <artist-details v-if="selectedArtistDetails" :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks" :playlists="playlists" :tracks="albumTracks"/>
         <artists-list v-if='searchedArtists' :artists="searchedArtists"/>
-        <albums-list v-if='searchedAlbums' :albums="searchedAlbums"/>
+        <albums-list v-if='searchedAlbums' :albums="searchedAlbums" />
         <tracks-list v-if='searchedTracks' :tracks="searchedTracks" :playlists="playlists"/>
         <tracks-list v-if='albumTracks' :tracks="albumTracks" :playlists="playlists"/>
-        <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks" :playlists="playlists"/>
+        <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks && !selectedArtistDetails && !showArtist" :playlists="playlists"/>
+        <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" value="Clear">
       </div>
       <div class="border"><playlist :playlists='playlists'/></div>
       </div>
-    <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" value="Clear">
+
   </div>
 </template>
 
@@ -43,7 +45,8 @@ export default {
       searchedArtists: '',
       searchedAlbums: '',
       searchedTracks: '',
-      albumTracks: []
+      albumTracks: [],
+      showArtist: false
     }
   },
   components: {
@@ -60,24 +63,30 @@ export default {
       .then(res => this.playlists = res);
 
     eventBus.$on('submit-artist', (artist) => {
-      this.clear();
+      //this.clear();
+      this.selectedArtistDetails = null;
       MusicService.getArtists(artist)
         .then(res => this.searchedArtists = res);
     });
 
     eventBus.$on('submit-album', (album) => {
-      this.clear();
+      //this.clear();
+      this.selectedArtistDetails = null;
       MusicService.getAlbums(album)
       .then(res => this.searchedAlbums = res);
     });
 
     eventBus.$on('submit-track', (track) => {
-      this.clear();
+      //this.clear();
+      this.selectedArtistDetails = null;
       MusicService.getTracks(track)
         .then(res => this.searchedTracks = res);
     });
 
     eventBus.$on('artist-selected', artist => {
+      this.showArtist = true;
+      this.clear();
+      this.clearSearch();
       MusicService.getArtistInfo(artist.name)
         .then(res => this.selectedArtistDetails = this.formatSelectedArtist(res));
       MusicService.getArtistAlbums(artist.name)
@@ -86,8 +95,8 @@ export default {
         .then(res => this.topTracks = res.track);
     });
 
-    eventBus.$on('album-selected', mbid => {
-      MusicService.getAlbumTracks(mbid)
+    eventBus.$on('album-selected', data => {
+      MusicService.getAlbumTracks(data[0], data[1])
         .then(res => this.albumTracks = this.formatAlbum(res));
     });
 
@@ -107,19 +116,25 @@ export default {
       // THIS NEEDS TO BE FIXED, DOES NOT GET UPDATED BEFORE PAGE REFRESHED
 
       PlaylistService.updatePlaylist(payload, id)
-        .then(res => this.playlists = [...this.playlists, res])
+        .then(res => this.playlists = [...this.playlists, res]);
+
     });
 
   },
   methods: {
     clear: function() {
-      this.searchedArtists= '';
-      this.searchedAlbums ='';
-      this.searchedTracks = '';
       this.selectedArtistDetails = null;
       this.topAlbums = [];
       this.topTracks = [];
       this.albumTracks = [];
+      this.searchedArtists= '';
+      this.searchedAlbums ='';
+      this.searchedTracks = '';
+    },
+    clearSearch: function() {
+      this.searchedArtists= '';
+      this.searchedAlbums ='';
+      this.searchedTracks = '';
     },
     formatAlbum: function(data) {
       return data.map(track => {

@@ -59,8 +59,8 @@ export default {
       .then(data => data.results.trackmatches.track);
   },
 
-  getAlbumTracks(mbid) {
-    const url = `${baseURL}?method=album.getinfo&mbid=${mbid}&api_key=${process.env.VUE_APP_API_KEY}&format=json`
+  getAlbumTracks(name, artist) {
+    const url = `${baseURL}?method=album.getinfo&album=${name}&artist=${artist}&api_key=${process.env.VUE_APP_API_KEY}&format=json`
     return fetch(url)
       .then(res => res.json())
       .then(data => data.album.tracks.track);

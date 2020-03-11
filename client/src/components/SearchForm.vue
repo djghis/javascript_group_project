@@ -7,7 +7,6 @@
     </div>
     <div class="searchBarContainer" v-if="!!searchType">
       <input v-model='searchValue' type="text" :placeholder="searchPlaceholder" @keyup="search">
-      <input type="submit" value="Go">
     </div>
   </div>
 </template>
@@ -30,7 +29,7 @@ export default {
       this.searchValue = '';
     },
     search: function() {
-      if (!!this.searchValue) {
+      if (this.searchValue) {
         eventBus.$emit(`submit-${this.searchType}`, this.searchValue);
       }
     },

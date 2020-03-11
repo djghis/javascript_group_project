@@ -1,7 +1,8 @@
 <template lang="html">
 <div class="">
+  <h2>Album Search</h2>
   <ul>
-    <li v-if="album.mbid"  @click="handleClick(album.mbid)" v-for="(album, index) in albums" :key="index">{{album.name}} by {{album.artist}}</li>
+    <li v-if="album.mbid"  @click="handleClick(album.name, album.artist)" v-for="(album, index) in albums" :key="index">{{album.name}} by {{album.artist}}</li>
   </ul>
 </div>
 </template>
@@ -13,8 +14,9 @@ export default {
   name: "albums-list",
   props:['albums'],
   methods: {
-    handleClick (mbid) {
-      eventBus.$emit('album-selected', mbid);
+    handleClick (album, artist) {
+      const data = [album, artist]
+      eventBus.$emit('album-selected', data);
     }
   }
 };
