@@ -115,6 +115,24 @@ export default {
         const index = this.playlists.findIndex(playlist => playlist._id === id);
         this.playlists.splice(index, 1);
     });
+    eventBus.$on('delete-track', (playlist, track) => {
+        const index = this.playlists.findIndex(playlistToFind => playlist._id === playlistToFind._id);
+        const trackIndex = this.playlists[index].tracks.indexOf(track);
+        this.playlists[index].tracks.splice(trackIndex, 1);
+        const updatedPlaylist = this.playlists[index].tracks
+
+        const payload = {
+          name: playlist.name,
+          tracks: updatedPlaylist
+        }
+
+        const id = playlist._id
+        PlaylistService.updatePlaylist(payload, id)
+          .then(res => {
+            PlaylistService.getPlaylists()
+              .then(res => this.playlists = res)
+        });
+  });
   },
   methods: {
     clear: function() {

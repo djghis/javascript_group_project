@@ -3,7 +3,9 @@
     <h2>Your playlists</h2>
       <ul>
         <li v-for="playlist in playlists"><details><summary>{{playlist.name}}</summary><br>
-          <li v-for="track in playlist.tracks">{{track.name}} by {{track.artist}}</li>
+          <li v-for="track in playlist.tracks">{{track.name}} by {{track.artist}}
+          <button @click.prevent="handleDeleteTrack(playlist, track)" type="button">X</button>
+          </li>
           <button @click.prevent="handleDeletePlaylist(playlist._id)" type="button" name="Delete">Delete playlist</button>
         </details></li>
 
@@ -36,6 +38,9 @@ export default {
     },
     handleDeletePlaylist: function (id) {
       eventBus.$emit('delete-playlist', id);
+    },
+    handleDeleteTrack: function (playlist, track) {
+      eventBus.$emit('delete-track', playlist, track);
     }
   }
 }
