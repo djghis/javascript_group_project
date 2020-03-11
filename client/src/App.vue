@@ -203,6 +203,17 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 3em;
+  /* height: 500px;
+  overflow-y: scroll; */
+}
+
+#music-div {
+  height: 700px;
+  overflow-y: scroll;
+}
+#playlist-div {
+  height: 700px;
+  overflow-y: scroll;
 }
 
 .border {
