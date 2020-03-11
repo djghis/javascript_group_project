@@ -3,7 +3,7 @@
   <h2>Album Search</h2>
   <ul>
     <li class="list" v-if="album.mbid" v-for="(album, index) in albums" :key="index">{{album.name}} by {{album.artist}}
-      <details @toggle="handleClick(album.name, album.artist)"><summary>Tracks</summary>
+      <details ref="details" @click="handleClick(album.name, album.artist)"><summary>Tracks</summary>
         <ul>
           <li class="list" v-for="track in tracks">{{track.name}}
             <button class="plus"  @click="selectPlaylist(track)" type="button">+</button>
@@ -34,7 +34,13 @@ export default {
     }
   },
   methods: {
+    closeDetails(evt) {
+      this.$refs.details.forEach(detail => {
+        detail.removeAttribute('open')
+      })
+    },
     handleClick (album, artist) {
+      this.closeDetails()
       const data = [album, artist]
       eventBus.$emit('album-selected', data);
     },
