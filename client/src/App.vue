@@ -3,7 +3,7 @@
     <h1>Spot<span id="dot" class="fader">.</span><span id="fm">fm</span></h1>
     <div id="grid">
       <div id="search"><search-form></search-form></div>
-      <div class="border">
+      <div class="border" id="music-div">
         <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" value="Clear">
         <artist-details v-if="selectedArtistDetails" :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks" :playlists="playlists" :tracks="albumTracks"/>
         <artists-list v-if='searchedArtists' :artists="searchedArtists"/>
@@ -13,7 +13,7 @@
         <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks && !selectedArtistDetails && !showArtist" :playlists="playlists"/>
         <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" value="Clear">
       </div>
-      <div class="border"><playlist :playlists='playlists'/></div>
+      <div class="border" id="playlist-div"><playlist :playlists='playlists'/></div>
       </div>
 
   </div>
@@ -186,7 +186,6 @@ export default {
   margin-left: 10%;
   padding-left: 2rem;
   padding-right: 2rem;
-  background-color: #fcfdff;
   opacity: 90%;
 }
 
@@ -203,9 +202,10 @@ export default {
 }
 
 .border {
-  border: 3px solid red;
-  padding: 0.5em 0.5em;
+  border: 5px solid #EAF6FF;
+  padding: 0.5em 2.5em;
   margin: 0.5em 0.5em;
+  border-radius: 15px;
 }
 
 h1 {
@@ -214,7 +214,7 @@ h1 {
   text-align: center;
   font-family: 'Lato', sans-serif;
   font-size: 3.2em;
-  color: slategrey;
+  color: #fcfdff;
   opacity: 80%;
   text-align: center;
 }
@@ -226,9 +226,8 @@ h1 {
 #dot {
   content: '.';
   font-size: 3em;
-  color: #ffed4f;
+  color: #4b0082;
 }
-
 
   .fader {
     animation: fadein;

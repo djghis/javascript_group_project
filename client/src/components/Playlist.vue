@@ -11,7 +11,7 @@
 
       </ul>
     <form @submit.prevent="handleSubmit">
-      <label>Playlist</label>
+      <label>Playlist </label>
       <input v-model='name' type="text">
       <input type="submit" value="Add"/>
 
@@ -47,5 +47,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-
+  li {
+    color: #EAF6FF;
+  }
 </style>
