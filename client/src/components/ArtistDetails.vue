@@ -11,7 +11,7 @@
         <li v-for="album in topalbums">{{album.name}}
           <details @toggle="handleAlbumClick(album.name, album.artist.name)"><summary>Tracks</summary>
             <ul>
-              <li v-for="track in tracks">{{track.name}}
+              <li v-for="track in tracks"><span class="bolder">{{track.name}}</span>
                 <button @click="selectPlaylist(track)" type="button">+</button>
                 <div v-if="selectedTrack === track">
                   <select v-model="selectedPlaylist">

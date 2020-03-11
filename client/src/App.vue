@@ -4,7 +4,7 @@
     <div id="grid">
       <div id="search"><search-form></search-form></div>
       <div class="border" id="music-div">
-        <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" value="Clear">
+        <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" value="Clear search">
         <artist-details v-if="selectedArtistDetails" :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks" :playlists="playlists" :tracks="albumTracks"/>
         <artists-list v-if='searchedArtists' :artists="searchedArtists"/>
         <albums-list v-if='searchedAlbums' :albums="searchedAlbums" :tracks="albumTracks" :playlists="playlists" />
@@ -180,9 +180,8 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
-
+/* @import url('https://fonts.googleapis.com/css?family=Lato&display=swap'); */
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap');
 #app {
   width: 80%;
   justify-content: center;
@@ -202,17 +201,17 @@ export default {
 #grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 3em;
+  grid-gap: 1em;
   /* height: 500px;
   overflow-y: scroll; */
 }
 
 #music-div {
-  height: 700px;
+  height: 75%;
   overflow-y: scroll;
 }
 #playlist-div {
-  height: 700px;
+  height: 75%;
   overflow-y: scroll;
 }
 

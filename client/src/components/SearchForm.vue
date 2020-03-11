@@ -76,11 +76,11 @@ input[type=submit]:hover {
 
 .searchBox {
   width: 30%;
-  height: 5em;
+  height: 2.5em;
   border: 5px solid #EAF6FF;
   padding: 0.5em 2.5em;
   margin: 0.5em 0.5em;
-  border-radius: 15px;
+  border-radius: 20px;
   display: grid;
   justify-content: center;
   text-align: center;

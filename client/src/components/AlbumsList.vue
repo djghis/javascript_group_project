@@ -2,7 +2,7 @@
 <div class="">
   <h2>Album Search</h2>
   <ul>
-    <li v-if="album.mbid" v-for="(album, index) in albums" :key="index">{{album.name}} by {{album.artist}}
+    <li v-if="album.mbid" v-for="(album, index) in albums" :key="index"><span class="bolder">{{album.name}}</span> by {{album.artist}}
       <details @toggle="handleClick(album.name, album.artist)"><summary>Tracks</summary>
         <ul>
           <li v-for="track in tracks">{{track.name}}

@@ -1,15 +1,15 @@
 <template lang="html">
   <div id="charts">
     <h2>Top of the charts</h2>
-    <br>
+    <!-- <br> -->
     <h4>Top artists</h4>
       <ul>
         <li v-for="artist in topArtists" @click="handleArtistClick(artist)">{{artist}}</li>
       </ul>
-      <br>
+      <!-- <br> -->
     <h4>Top tracks</h4>
       <ul >
-        <li class="list" v-for="track in topTracks">{{track.name}} by {{track.artist}}
+        <li class="list" v-for="track in topTracks"><span class="bolder">{{track.name}}</span> by {{track.artist}}
           <button class="plus" @click="selectPlaylist(track)" type="button">+</button>
           <div v-if="selectedTrack === track">
             <select required v-model="selectedPlaylist">
