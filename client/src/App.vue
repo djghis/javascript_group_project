@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Spot<span id="dot"></span><span id="fm">fm</span></h1>
+    <h1>Spot<span id="dot" class="fader">.</span><span id="fm">fm</span></h1>
     <div id="grid">
       <div id="search"><search-form></search-form></div>
       <div class="border">
@@ -186,49 +186,67 @@ h1 {
   font-size: 0.7em;
 }
 
-#dot::before {
+#dot {
   content: '.';
   font-size: 3em;
   color: #ffed4f;
-  animation: fadein 4s;
-  -moz-animation: fadein 4s;
-  -webkit-animation: fadein 4s;
-  -o-animation: fadein 4s;
+}
+
+
+  .fader {
+    animation: fadein;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-duration: 7s;
+    display: inline-block;
+    animation-play-state: running;
 }
 
 @keyframes fadein {
-  from {
+  0% {
     opacity: 0;
   }
-  to {
+  50% {
     opacity:1;
   }
+  100% {
+  opacity:0
+}
 }
 
 @-moz-keyframes fadein {
-  from {
+  0% {
     opacity: 0;
   }
-  to {
+  50% {
     opacity:1;
   }
+  100% {
+  opacity:0
+}
 }
 
 @-webkit-keyframes fadein {
-  from {
+  0% {
     opacity: 0;
   }
-  to {
+  50% {
     opacity:1;
   }
+  100% {
+  opacity:0
+}
 }
 
 @-o-keyframes fadein {
-  from {
+  0% {
     opacity: 0;
   }
-  to {
+  50% {
     opacity:1;
   }
+  100% {
+  opacity:0
+}
 }
 </style>
