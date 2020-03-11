@@ -2,7 +2,7 @@
   <div id="playlist">
     <h2>Your playlists</h2>
       <ul>
-        <li v-for="playlist in myPlaylists"><details><summary>{{playlist.name}}</summary><br>
+        <li v-for="playlist in playlists"><details><summary>{{playlist.name}}</summary><br>
           <li v-for="track in playlist.tracks">{{track.name}} by {{track.artist}}</li>
         </details></li>
       </ul>
@@ -20,22 +20,19 @@ import {eventBus} from '@/main.js';
 
 export default {
   name: 'playlist',
-  props: ['playlist'],
+  props: ['playlists'],
   data() {
     return {
       name: '',
       myPlaylists: []
     }
   },
-  mounted() {
-    this.fetchPlaylists();
-  },
   methods: {
     handleSubmit: function () {
-      this.myPlaylists.push(payload);
       const payload = {name: this.name, tracks: []};
       eventBus.$emit('add-playlist', payload);
       this.myPlaylists.push(payload);
+
     },
     fetchPlaylists: function() {
       PlaylistService.getPlaylists()
