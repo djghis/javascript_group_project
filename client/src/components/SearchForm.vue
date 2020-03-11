@@ -20,10 +20,12 @@ export default {
       searchValue: '',
       searchType: undefined,
       searchPlaceholder: '',
+
     }
   },
   methods: {
     showSearchBar: function(type) {
+
       this.searchType = type;
       this.searchPlaceholder = `Search for ${type}s`;
       this.searchValue = '';

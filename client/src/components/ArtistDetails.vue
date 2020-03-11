@@ -9,7 +9,7 @@
     <h5>Top albums:</h5>
       <ul>
         <li v-for="album in topalbums">{{album.name}}
-          <details @toggle="handleAlbumClick(album.name, album.artist.name)">
+          <details @toggle="handleAlbumClick(album.name, album.artist.name)"><summary>Tracks</summary>
             <ul>
               <li v-for="track in tracks">{{track.name}}
                 <button @click="selectPlaylist(track)" type="button">+</button>

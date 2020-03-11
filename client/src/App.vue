@@ -4,14 +4,14 @@
     <div id="grid">
       <div id="search"><search-form></search-form></div>
       <div class="border">
-        <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" value="Clear">
+        <input v-if="searchedArtists || searchedAlbums || searchedTracks || selectedArtistDetails" @click="clear" type="button" value="Clear">
         <artist-details v-if="selectedArtistDetails" :artist="selectedArtistDetails" :topalbums="topAlbums" :toptracks="topTracks" :playlists="playlists" :tracks="albumTracks"/>
         <artists-list v-if='searchedArtists' :artists="searchedArtists"/>
-        <albums-list v-if='searchedAlbums' :albums="searchedAlbums" />
+        <albums-list v-if='searchedAlbums' :albums="searchedAlbums" :tracks="albumTracks" />
         <tracks-list v-if='searchedTracks' :tracks="searchedTracks" :playlists="playlists"/>
-        <tracks-list v-if='albumTracks' :tracks="albumTracks" :playlists="playlists"/>
+        <!-- <tracks-list v-if='albumTracks' :tracks="albumTracks" :playlists="playlists"/> -->
         <chart-component v-if="!searchedArtists && !searchedAlbums && !searchedTracks && !selectedArtistDetails && !showArtist" :playlists="playlists"/>
-        <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" value="Clear">
+        <!-- <input v-if="searchedArtists || searchedAlbums || searchedTracks" @click="clear" type="button" value="Clear"> -->
       </div>
       <div class="border"><playlist :playlists='playlists'/></div>
       </div>
@@ -63,21 +63,24 @@ export default {
       .then(res => this.playlists = res);
 
     eventBus.$on('submit-artist', (artist) => {
-      //this.clear();
+      this.searchedAlbums ='';
+      this.searchedTracks = '';
       this.selectedArtistDetails = null;
       MusicService.getArtists(artist)
         .then(res => this.searchedArtists = res);
     });
 
     eventBus.$on('submit-album', (album) => {
-      //this.clear();
+      this.searchedArtist ='';
+      this.searchedTracks = '';
       this.selectedArtistDetails = null;
       MusicService.getAlbums(album)
       .then(res => this.searchedAlbums = res);
     });
 
     eventBus.$on('submit-track', (track) => {
-      //this.clear();
+      this.searchedAlbums ='';
+      this.searchedArtists = '';
       this.selectedArtistDetails = null;
       MusicService.getTracks(track)
         .then(res => this.searchedTracks = res);
@@ -145,6 +148,7 @@ export default {
   },
   methods: {
     clear: function() {
+      this.showArtist = false;
       this.selectedArtistDetails = null;
       this.topAlbums = [];
       this.topTracks = [];
