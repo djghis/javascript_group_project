@@ -101,21 +101,20 @@ export default {
       let payload = {
         name: data[1].name,
         tracks: data[1].tracks,
-      };
+    };
       payload.tracks.push(data[0]);
-
-      // THIS NEEDS TO BE FIXED, DOES NOT GET UPDATED BEFORE PAGE REFRESHED
 
       PlaylistService.updatePlaylist(payload, id)
         .then(res => {
-          // this.playlists = [...this.playlists, res]
           PlaylistService.getPlaylists()
             .then(res => this.playlists = res)
-        })
-
-
+        });
     });
-
+      eventBus.$on('delete-playlist', (id) => {
+        PlaylistService.deletePlaylist(id);
+        const index = this.playlists.findIndex(playlist => playlist._id === id);
+        this.playlists.splice(index, 1);
+    });
   },
   methods: {
     clear: function() {

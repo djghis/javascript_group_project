@@ -4,12 +4,15 @@
       <ul>
         <li v-for="playlist in playlists"><details><summary>{{playlist.name}}</summary><br>
           <li v-for="track in playlist.tracks">{{track.name}} by {{track.artist}}</li>
+          <button @click.prevent="handleDeletePlaylist(playlist._id)" type="button" name="Delete">Delete playlist</button>
         </details></li>
+
       </ul>
     <form @submit.prevent="handleSubmit">
       <label>Playlist</label>
       <input v-model='name' type="text">
-      <input type="submit" value="Add">
+      <input type="submit" value="Add"/>
+
     </form>
   </div>
 </template>
@@ -23,20 +26,16 @@ export default {
   props: ['playlists'],
   data() {
     return {
-      name: '',
-      myPlaylists: []
+      name: ''
     }
   },
   methods: {
     handleSubmit: function () {
       const payload = {name: this.name, tracks: []};
       eventBus.$emit('add-playlist', payload);
-      this.myPlaylists.push(payload);
-
     },
-    fetchPlaylists: function() {
-      PlaylistService.getPlaylists()
-        .then(res => this.myPlaylists = res);
+    handleDeletePlaylist: function (id) {
+      eventBus.$emit('delete-playlist', id);
     }
   }
 }
