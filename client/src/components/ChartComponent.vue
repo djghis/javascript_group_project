@@ -1,10 +1,12 @@
 <template lang="html">
   <div id="charts">
     <h2>Top of the charts</h2>
+    <br>
     <h4>Top artists</h4>
       <ul>
         <li v-for="artist in topArtists" @click="handleArtistClick(artist)">{{artist}}</li>
       </ul>
+      <br>
     <h4>Top tracks</h4>
       <ul>
         <li v-for="track in topTracks">{{track.name}} by {{track.artist}}
@@ -17,6 +19,7 @@
           </div>
         </li>
       </ul>
+      <br>
     <h4>Top tags</h4>
       <ul>
         <li v-for="tag in topTags">{{tag}}</li>
@@ -77,5 +80,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
 
 </style>
