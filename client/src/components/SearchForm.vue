@@ -86,6 +86,9 @@ input[type=submit]:hover {
   text-align: center;
   align-items: center;
 }
+.searchBox:hover {
+  cursor: pointer;
+}
 
 .searchBarContainer {
   width: 100%;
