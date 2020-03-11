@@ -1,7 +1,7 @@
 <template lang="html">
 <div class="">
   <ul>
-    <li v-for="(track, index) in tracks" :key="index">{{track.name}} by {{track.artist}}
+    <li class="list" v-for="(track, index) in tracks" :key="index">{{track.name}} by {{track.artist}}
       <button class="plus" @click="selectPlaylist(track)" type="button">+</button>
       <div v-if="selectedTrack === track">
         <select v-model="selectedPlaylist">
@@ -39,4 +39,8 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.list:hover {
+  color: #EAF6FF;
+  cursor: default;
+}
 </style>
