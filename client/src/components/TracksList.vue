@@ -40,4 +40,8 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.list:hover {
+  color: #EAF6FF;
+  cursor: default;
+}
 </style>

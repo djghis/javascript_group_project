@@ -8,7 +8,7 @@
       </ul>
     <h5>Top albums:</h5>
       <ul>
-        <li v-for="album in topalbums">{{album.name}}
+        <li class="list" v-for="album in topalbums">{{album.name}}
           <details @toggle="handleAlbumClick(album.name, album.artist.name)"><summary>Tracks</summary>
             <ul>
               <li v-for="track in tracks"><span class="bolder">{{track.name}}</span>
@@ -77,4 +77,8 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.list:hover {
+  color: #EAF6FF;
+  cursor: default;
+}
 </style>
