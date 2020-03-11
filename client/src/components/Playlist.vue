@@ -32,6 +32,7 @@ export default {
   },
   methods: {
     handleSubmit: function () {
+      this.myPlaylists.push(payload);
       const payload = {name: this.name, tracks: []};
       eventBus.$emit('add-playlist', payload);
       this.myPlaylists.push(payload);

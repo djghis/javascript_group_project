@@ -194,6 +194,7 @@ h1 {
   -moz-animation: fadein 4s;
   -webkit-animation: fadein 4s;
   -o-animation: fadein 4s;
+  
 }
 
 @keyframes fadein {
