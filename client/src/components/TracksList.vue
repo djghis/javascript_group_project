@@ -2,7 +2,7 @@
 <div class="">
   <h2>Track search</h2>
   <ul>
-    <li class="list" v-for="(track, index) in tracks" :key="index"><span class="bolder">{{track.name}}</span> by {{track.artist}}
+    <li v-for="(track, index) in tracks" :key="index"><span class="bolder">{{track.name}}</span> by {{track.artist}}
       <button class="plus" @click="selectPlaylist(track)" type="button">+</button>
       <div v-if="selectedTrack === track">
         <select v-model="selectedPlaylist">
