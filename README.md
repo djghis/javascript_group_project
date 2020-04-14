@@ -1,5 +1,6 @@
 # Playlist_project
-BRIEF
+
+## Brief
 
 Building an App using an API, we used the last.fm API to get info about top tracks listend to and info about artist.
 
@@ -18,6 +19,6 @@ Use CSS to tidy up look and feel of the app
 
 
 
-## TECHNOLOGIES USED
+## Technologies Used
 
 JavaScript, Vue.js, Node.js, Html, Css, MongoDB, APIs.
